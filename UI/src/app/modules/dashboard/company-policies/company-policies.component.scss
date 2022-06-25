@@ -1,0 +1,17 @@
+.col {
+    color: rgb(250, 247, 252);
+    // background-color: rgb(107, 23, 241);
+    width: 100px;
+
+    text-align: center;
+    border: rgb(122, 17, 226);
+}
+.main-button {
+    .active {
+        color: rgb(250, 247, 252);
+        background-color: rgb(107, 23, 241);
+        width: 190px;
+        text-align: center;
+        border: rgb(122, 17, 226);
+    }
+}

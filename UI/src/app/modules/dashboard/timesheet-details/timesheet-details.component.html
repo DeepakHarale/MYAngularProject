@@ -1,0 +1,36 @@
+<sb-layout-dashboard>
+<div class="container mb-4">
+    <div class="row">
+      <div class="col-12">    
+        <div class="table-responsive">
+          <h2 class="col-sm">Timesheet Status</h2>
+          <table class="table mt-2 table-striped" >
+            <thead>
+              <tr>  
+                <th class="col-4 text-center th-bgcolour">From Date</th>
+                <th class="col-4 text-center th-bgcolour">To Date</th>
+                <th class="col-4 text-center th-bgcolour">Status</th>
+                <th class="col-4 text-center th-bgcolour">Update/View</th>
+              </tr>
+            </thead>    
+            <tbody>
+              <tr *ngFor="let tData of timesheetData">            
+                <td class="col-4 text-center">{{ tData.mondayDate  | date:'d-M-yyyy' }}</td>
+                <td class="col-4 text-center">{{ tData.sundayDate | date:'d-M-yyyy' }}</td>
+                <td class="col-4" class={{getClassName(tData.status)}}>
+                  <span class="d-inline-block" data-toggle="tooltip" [title]="tData.status=='REJECTED'? tData.reason : ''">
+                    {{ tData.status }} &nbsp; <i class="fas fa-info-circle"></i>
+                  </span>
+                </td>              
+                <td class="col-4 text-center" *ngIf="toViewButton(tData.status)">
+                  <button class="btn btn-primary" style="height: 40px;width: 80px;"  (click)="updateData(tData.weekNo)"> View </button></td>
+                <td class="col-4 text-center"  *ngIf="toNormaliseStatusKey(tData.status)=='PENDING'">
+                  <button class="btn btn-primary" style="height: 40px;width: 80px;" (click)="updateData(tData.weekNo)">Update</button></td>
+              </tr>
+            </tbody>   
+          </table>        
+        </div>
+      </div>
+    </div>
+  </div>   
+</sb-layout-dashboard>

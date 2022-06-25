@@ -1,0 +1,6 @@
+export const AppStatus = {
+    SUBMITTED : 'SUBMITTED',
+    PENDING:'PENDING',
+    REJECTED:'REJECTED',
+    APPROVED:'APPROVED'
+}

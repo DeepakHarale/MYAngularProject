@@ -1,0 +1,12 @@
+<nav class="sb-sidenav accordion" id="sidenavAccordion" [ngClass]="sidenavStyle">
+    <div class="sb-sidenav-menu">
+        <div class="nav">
+            <ng-container *ngFor="let section of sideNavSections"
+                ><div class="sb-sidenav-menu-heading" *ngIf="section.text">{{ section.text }}</div>
+                <ng-container *ngFor="let item of section.items;let idx=index"><sb-side-nav-item [sideNavItem]="sideNavItems[item]" [idx]="idx"></sb-side-nav-item></ng-container
+            ></ng-container>
+            
+        </div>
+    </div>
+   
+</nav>

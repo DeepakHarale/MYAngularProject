@@ -1,0 +1,93 @@
+
+.dropdown{
+  width: 200px;
+}
+
+.input-text
+{
+height: 28px;
+width: 80%;
+margin-right: 4px;
+margin-left: 4px;
+
+
+}
+.bg{
+  background-color: #24a0ed;
+}
+
+.grayout {
+  // opacity: 0.4; /* Real browsers */
+  background-color: #ececec;
+  color: black;
+}
+  
+.w-fit-content {
+    width: fit-content;
+    
+    
+}
+
+.p-splitButton{
+  margin-top: 24px;
+  margin-right: 24px;
+  position: relative;
+  height: 36px;
+  color: red;
+}
+
+.myClass{
+    color : green;
+  }
+
+  .comment {
+    resize: none;
+    height: 100px;
+    width: 455px;
+  }
+
+.myTable {
+    position:fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
+
+.add-on {
+    float: right;
+    margin-top: -40px;
+    right: 5px;
+    color: red;
+    padding: 3px;
+    text-align: center;
+   
+    position: relative;
+}
+.modal {
+  position: absolute;
+  float: left;
+  height: 500px;
+
+  
+  left: 40%;
+  right: 30%;
+  bottom: 20%;
+  max-width: 100% !important;
+  align-items: center;
+  top: 50%;
+  transform: translate(-40%, -50%);
+}
+
+.modal-2{
+    width: 100%;    
+}
+
+  
+:host ::ng-deep {
+  .th-bgcolour{
+      background-color:#24a0ed !important;color: #fff !important;
+  }
+   
+   
+}

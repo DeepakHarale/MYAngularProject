@@ -1,0 +1,122 @@
+<sb-layout-dashboard>
+
+
+
+
+  <div *ngIf="!isAddStorage">
+    <div class="row justify-content-between mb-3 mt-4">
+      <div class="col-sm-4">
+
+        <!-- <h4> Holiday List({{getHoliday?.length ||'0'}})</h4> -->
+      </div>
+
+      <div class="col-sm-4 d-flex flex-row-reverse">
+        <button pButton type="button" icon="pi pi-plus-circle" label="Add Storage"
+          class="p-button-secondary p-button-sm" (click)="AddStorageDetails()"></button>
+      </div>
+    </div>
+
+
+    <p-table [columns]="[]" [value]="GetStorage" styleClass="p-datatable-responsive-demo"
+      class="table mt-2 table-striped" [rowsPerPageOptions]="rowsPerPageOptions" [paginator]="true" [rows]="10"
+      styleClass="p-datatable-sm">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th class="th-bgcolour">AccessoriesStorage Id</th>
+          <th class="th-bgcolour">Accessories Name</th>
+          <th class="th-bgcolour">Total Storage</th>
+          <th class="th-bgcolour">Action</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr>
+          <td>{{item.accessoriesStorageId}}</td>
+          <td>{{item.accessoriesName}}</td>
+          <td>{{item.accessoriesStorage1}}</td>
+          <td>
+            <i (click)="updatedData(item)" *ngIf="item.accessoriesStorageId!=0" class="fa fa-edit " pTooltip="Edit"
+              style="font-size:20px">
+            </i> &nbsp;
+
+            <i (click)="onDeleted($event,item)" [hidden]="isDeleteHide" class="pi pi-times-circle icon icon-delete"
+              pTooltip="Delete" tooltipPosition="top"></i>
+          </td>
+
+
+
+        </tr>
+      </ng-template>
+    </p-table>
+
+  </div>
+
+
+  <div class="container" *ngIf="isAddStorage">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <div class="card shadow-lg border-0 rounded-lg">
+          <div class="card-header">
+            <h3 class="text-center">Accessories Storage</h3>
+          </div>
+          <div class="card-body">
+
+
+            <form [formGroup]="storageForm">
+
+              <div class="row my-4">
+
+
+                <div class="col-md-12">
+                  <div class="form-group"><label class="mb-1" for="accessoriesName">Accessories Name</label><span
+                      style="color:red;size:5px;">*</span>
+                    <input autocomplete="off" id="date" type="text" formControlName="accessoriesName"
+                      class="form-control">
+
+
+                  </div>
+                  <div *ngIf="submitted && f?.accessoriesName?.errors">
+                    <span *ngIf="f?.date?.accessoriesName?.required" class="error-msg small">Accessories Name is
+                      required.</span>
+
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group"><label class="mb-1" for="accessoriesName">Total Storage</label><span
+                      style="color:red;size:5px;">*</span>
+                    <input autocomplete="off" id="accessoriesStorage1" type="text" name="accessoriesStorage1"
+                      formControlName="accessoriesStorage1" class="form-control">
+
+
+                  </div>
+                  <div *ngIf="submitted && f?.accessoriesStorage1.errors">
+                    <span *ngIf="f?.date?.accessoriesStorage1.required" class="error-msg small">Accessories Storage is
+                      required.</span>
+
+                  </div>
+                </div>
+              </div>
+              <div>
+                <button type="button" (click)="onBackToList(false)" pButton
+                  class="p-button-warning float-left">BackToList</button>
+                <button type="submit" pButton class="p-button-success float-right " *ngIf="!isUpdateStorage"
+                  (click)="onSubmit()">Save</button>
+                <button type="submit" pButton class="btn btn-primary float-right" *ngIf="isUpdateStorage"
+                  (click)="UpdateTask()">Update</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <p-toast></p-toast>
+
+
+
+  <p-confirmPopup></p-confirmPopup>
+
+
+
+</sb-layout-dashboard>

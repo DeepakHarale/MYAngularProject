@@ -1,0 +1,107 @@
+<sb-layout-dashboard>
+    <div class="container mb-4 mt-4">
+        
+        <div id="accordion">
+            <div class="card card-default">
+                <div class="card-header justify-content-center">
+                    <h4>Assign Employee</h4>
+                </div>
+                <div class="form-row mt-4">
+                           
+                    <div class="form-group col">
+                      
+                        <label for="employee">Employee</label>
+                        <ng-select
+                        [items]="employeeList"
+                        placeholder="Unassigned"
+                        bindLabel="employeeName"
+                        [(ngModel)]="employeeId"
+                        bindValue="employeeId"    
+                        name="employeeId"
+                        (change)="selectEmployee()"
+                       
+                    >
+                    <!-- [multiple]="true" -->
+                    </ng-select>        
+                  
+                    </div>
+                </div>
+        
+                <div class="mt-4">
+                    <form [formGroup]="TaskDetailsForm">                      
+                        <div class="card-header justify-content-center mb-4 mt-4">
+                            <h4>Task Details</h4>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label for="pName" >Project Name</label><span style="color:red;size:5px;" >*</span>
+                                <input type="text" formControlName="projectName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.projectName.errors }" readonly />
+                                <div *ngIf="submitted && f.projectName.errors" class="invalid-feedback">
+                                    <div *ngIf="f.projectName.errors.required">Project Name is required</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col">
+                                <label>Projects Task Type</label><span style="color:red;size:5px;" >*</span>
+                                <input type="text" formControlName="projectsTaskType" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.projectsTaskType.errors }" />
+                                <div *ngIf="submitted && f.projectsTaskType.errors" class="invalid-feedback">
+                                    <div *ngIf="f.projectsTaskType.errors.required">Project Task Name is required</div>
+                                   
+                                </div>
+                            </div>
+                           
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label>Prorities</label><span style="color:red;size:5px;" >*</span>
+                                <select autocomplete="off" class="form-control " formControlName="prorities" id="prorities"
+                                type="text" placeholder="Select Priorities" [ngClass]="{ 'is-invalid': submitted && f.prorities.errors }">
+                                
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                               
+                              </select>
+
+                                <div *ngIf="submitted && f.prorities.errors" class="invalid-feedback">
+                                    <div *ngIf="f.prorities.errors.required">Prorities is required</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col">
+                                <label>Project Description</label><span style="color:red;size:5px;" >*</span>
+                                <input type="text" formControlName="projectDescription" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.projectDescription.errors }" />
+                                <div *ngIf="submitted && f.projectDescription.errors" class="invalid-feedback">
+                                    <div *ngIf="f.projectDescription.errors.required">Project Description is required</div>   
+                                </div>
+                            </div>
+                            <div class="form-group col">
+                                <label>Working Hours</label><span style="color:red;size:5px;" >*</span>
+                                <input type="text" (keypress)="numberOnly($event)" formControlName="workingHours" maxlength="5" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.workingHours.errors }" />
+                                <div *ngIf="submitted && f.workingHours.errors" class="invalid-feedback">
+                                    <div *ngIf="f.workingHours.errors.required">Working Hours is required</div>
+                                    <div *ngIf="f.workingHours.errors?.max">Max hours is 15</div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mr-4 ml-4 mb-4 mt-4 ">
+                                <button [routerLink]="['/dashboard/project-task']" 
+                                class=" btn btn-warning " type="button" >Back to List</button>                
+                          
+                                <button type="button" (click)="submitProjectDetails()"
+                                pButton class="p-button-primary float-right " >Save</button>             
+                        </div>
+                    </form>
+            </div>
+            </div>
+        </div>
+    </div>
+
+  <p-toast></p-toast>
+  <p-confirmPopup></p-confirmPopup>
+</sb-layout-dashboard>
+
+

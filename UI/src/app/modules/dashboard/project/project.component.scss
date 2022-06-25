@@ -1,0 +1,29 @@
+.modal {
+    position: fixed;
+    float: left;
+    height: 500px;
+  
+    
+    left: 30%;
+    right: 30%;
+    bottom: 20%;
+    max-width: 100% !important;
+    align-items: center;
+    top: 50%;
+    transform: translate(-30%, -50%);
+  }
+
+  .modal-2{
+      width: 100%;    
+  }
+  :host ::ng-deep {
+    .th-bgcolour{
+        background-color:#24a0ed !important;color: #fff !important;
+    }
+     
+     
+ }
+
+  
+
+  

@@ -1,0 +1,270 @@
+<sb-layout-dashboard>
+
+  <ng-container *ngIf="(sharedPermission.todos$ | async) as todo">
+    <ng-container *ngIf=" todo && todo[enumModule.Add_Timesheet]"> 
+        <div class="form">
+          <div class="note text-center mt-2">
+            <span class="text-green h4">Weekly Timesheet</span>
+          </div>
+          <div class="row mb-2 mt-2">
+            <div class="col-sm-6">
+              <button class="btn btn-success mr-4" (click)="displayPrevWeek()">
+                Prevoius Week
+              </button>
+              <button class="btn btn-success" (click)="displayNextWeek()"
+                *ngIf="  currentYear <= weekYear &&   currentWeekNumber > weekNumber || currentWeekNumber< weekNumber">
+                Next Week
+              </button>
+            </div>
+
+          </div>
+
+          <div class="row bg text-white ml-0 mr-0 mb-3 navbar navbar-dark ">
+            <div class="col-12 text-center">
+              <span class="h5 bg">
+                TIME SHEET FOR WEEK STARTING
+                {{ daysData[0] | date: "MMM-dd-YYYY" }} To
+                {{ daysData[6] | date: "MMM-dd-YYYY" }}</span>
+            </div>
+          </div>
+          <form [formGroup]="timesheetForm">
+            <table class="table table-striped">
+
+              <thead>
+                <tr style="font-size: small;">
+
+                  <th class="col-sm th-bgcolour">Project-Task</th>
+                  <th *ngFor="let dateWeek of daysData" class="th-bgcolour">
+
+                    {{dateWeek|date: "dd/MM/yyyy"}}
+                    {{getDateWeekName(dateWeek)}}
+                  </th>
+                  <th class="col th-bgcolour">Total Hrs</th>
+                  <th class="th-bgcolour"> Delete</th>
+                </tr>
+              </thead>
+
+              <tbody formArrayName="timesheetsTitle" *ngFor="let item of getControls; let i = index">
+
+                <tr [formGroupName]="i">
+
+                  <td>
+                    <div class="form-group">
+                      <ng-select name="projectsTaskId" placeholder="Select a task" formControlName="projectsTaskId"
+                        [ngClass]="{'is-invalid': submitted && item?.get('projectsTaskId')?.errors}"
+                        [items]="projectData" bindLabel="displayName" bindValue="id">
+                      </ng-select>
+                      <div *ngIf="submitted && item?.get('projectsTaskId')?.errors" class="invalid-feedback">
+                        Select a Project & Task
+                      </div>
+                    </div>
+                  </td>
+
+                  <td>
+                    <div class="form-group">
+                      <input type="text" class="form-control input-text" id="monday" name="monday" placeholder="hr"
+                        formControlName="mondayhr" (keypress)="numberOnly($event)" maxlength="2" [ngClass]="{
+                          'is-invalid': submitted && item?.get('mondayhr')?.errors
+                        }" />
+
+                      <span class="add-on">
+                        <a data-toggle="modal" data-target="#ModalTaskForm"><i class="fa fa-plus"
+                            (click)="idSelected($event, i)" id="mondayDescription" [ngStyle]="{
+                              color: fe[i].mondayDescription ? 'green' : '#24a0ed'
+                            }"></i></a>
+                      </span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <input type="text" class="form-control input-text" id="tuesday" formControlName="tuesdayhr"
+                        placeholder="hr" [ngClass]="{
+                          'is-invalid': submitted && item?.get('tuesdayhr')?.errors
+                        }" [min]="min" [max]="max" (keypress)="numberOnly($event)" maxlength="2" />
+                      <span class="add-on" id="spanDesc-0-0">
+                        <a data-toggle="modal" data-target="#ModalTaskForm"><i class="fa fa-plus"
+                            (click)="idSelected($event, i)" id="tuesdayDescription" [ngStyle]="{
+                              color: fe[i].tuesdayDescription ? 'green' : '#24a0ed'
+                            }"></i></a>
+                      </span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <input type="text" class="form-control input-text" id="wednesday" formControlName="wednesdayhr"
+                        placeholder="hr" [ngClass]="{
+                          'is-invalid': submitted && item?.get('wednesdayhr')?.errors
+                        }" (keypress)="numberOnly($event)" maxlength="2" />
+                      <span class="add-on" id="spanDesc-0-0">
+                        <a data-toggle="modal" data-target="#ModalTaskForm"><i class="fa fa-plus"
+                            (click)="idSelected($event, i)" id="wednesdayDescription" [ngStyle]="{
+                              color: fe[i].wednesdayDescription ? 'green' : '#24a0ed'
+                            }"></i></a>
+                      </span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <input type="text" class="form-control input-text" id="thursday" formControlName="thursdayhr"
+                        placeholder="hr" [ngClass]="{
+                          'is-invalid': submitted && item?.get('thursdayhr')?.errors
+                        }" (keypress)="numberOnly($event)" maxlength="2" />
+                      <span class="add-on" id="spanDesc-0-0">
+                        <a data-toggle="modal" data-target="#ModalTaskForm"><i class="fa fa-plus"
+                            (click)="idSelected($event, i)" id="thursdayDescription" [ngStyle]="{
+                              color: fe[i].thursdayDescription ? 'green' : '#24a0ed'
+                            }"></i></a>
+                      </span>
+                    </div>
+                  </td>
+
+                  <td>
+                    <div class="form-group">
+                      <input type="text" class="form-control input-text" id="friday" formControlName="fridayhr"
+                        placeholder="hr" [ngClass]="{
+                          'is-invalid': submitted && item?.get('fridayhr')?.errors
+                        }" (keypress)="numberOnly($event)" maxlength="2" />
+                      <span class="add-on" id="spanDesc-0-0">
+                        <a data-toggle="modal" data-target="#ModalTaskForm"><i class="fa fa-plus"
+                            (click)="idSelected($event, i)" id="fridayDescription" [ngStyle]="{
+                              color: fe[i].fridayDescription ? 'green' : '#24a0ed'
+                            }"></i></a>
+                      </span>
+                    </div>
+                  </td>
+
+                  <td>
+                    <div class="form-group">
+                      <input type="text" class="form-control input-text grayout" id="saturday" placeholder="hr"
+                        formControlName="saturdayhr" [ngClass]="{
+                          'is-invalid': submitted && item?.get('saturdayhr')?.errors
+                        }" (keypress)="numberOnly($event)" maxlength="2" />
+                      <span class="add-on" id="spanDesc-0-0">
+                        <a data-toggle="modal" data-target="#ModalTaskForm"><i class="fa fa-plus"
+                            (click)="idSelected($event, i)" id="saturdayDescription" [ngStyle]="{
+                              color: fe[i].saturdayDescription ? 'green' : '#24a0ed'
+                            }"></i></a>
+                      </span>
+                    </div>
+                  </td>
+
+                  <td>
+                    <div class="form-group">
+                      <input type="text" class="form-control input-text grayout" id="sunday" formControlName="sundayhr"
+                        placeholder="hr" [ngClass]="{
+                          'is-invalid': submitted && item?.get('sundayhr')?.errors
+                        }" (keypress)="numberOnly($event)" maxlength="2" />
+                      <span class="add-on" id="spanDesc-0-0">
+                        <a data-toggle="modal" data-target="#ModalTaskForm"><i class="fa fa-plus"
+                            (click)="idSelected($event, i)" id="sundayDescription" [ngStyle]="{
+                              color: fe[i].sundayDescription ? 'green' : '#24a0ed'
+                            }"></i></a>
+                      </span>
+                    </div>
+                  </td>
+                  <td>
+                    {{
+                    +this.fe[i]["mondayhr"] +
+                    +this.fe[i]["tuesdayhr"] +
+                    +this.fe[i]["wednesdayhr"] +
+                    +this.fe[i]["thursdayhr"] +
+                    +this.fe[i]["fridayhr"] +
+                    +this.fe[i]["saturdayhr"] +
+                    +this.fe[i]["sundayhr"]
+                    }}
+                  </td>
+                  <td>
+                    <!-- permission.delete || -->
+                    <!-- <ng-container *ngIf="todo[enumModule.Add_Timesheet][enumPer.ADD]"> -->
+
+                    <ng-container
+                      *ngIf=" statusFlag == 'pending' || statusFlag == 'PENDING' && todo[enumModule.Add_Timesheet][enumPer.DELETE]">
+                      <i *ngIf=" i>0 " (click)="removeRow($event,item?.get('timeSheetId').value , i)"
+                        class="pi pi-times-circle icon icon-delete"></i>
+                    </ng-container>
+                  </td>
+
+
+                </tr>
+              </tbody>
+            </table>
+            <div class="text-center">
+              <span class="text-danger" *ngIf="submitted && flag">On {{messageError}} Please enter working hours values
+                less
+                than 15</span>
+            </div>
+            <div>
+              <button class="btn btn-warning float-right mr-4 mt-4 text-white" (click)="onReset()">
+                Refresh
+              </button>
+
+              <ng-container *ngIf="todo[enumModule.Add_Timesheet][enumPer.ADD] && toNormaliseStatusKey(statusFlag)">
+                <button class="btn btn-success float-right mr-4 mt-4 text-white"
+                  (click)="onSubmitConfim($event,'SUBMITTED')">
+                  Submit
+                </button>
+                <button class="btn btn-primary float-right mr-4 mt-4 text-white"
+                  (click)="onSubmitTimesheetForm('PENDING')">
+                  Save
+                </button>
+                <button class="btn btn-primary float-right mr-4 mt-4 text-white" (click)="addRow()">
+                  Add Row
+                </button>
+                <p-splitButton class="float-right p-splitButton" label="Download" icon="pi pi-download"
+                  (onClick)="btnsplit.onDropdownButtonClick()" #btnsplit [model]="items"></p-splitButton>
+              </ng-container>
+
+              <button class="btn btn-warning float-left mr-4 mt-4 text-white"
+                [routerLink]="['/dashboard/timesheet-details']">
+                Back To List
+              </button>
+            </div>
+            <p-confirmPopup></p-confirmPopup>
+          </form>
+        </div>   
+
+      <div id="ModalTaskForm" class="modal fade mt-8"
+        *ngIf="statusFlag === 'pending' || statusFlag === 'PENDING' || statusFlag === 'Pending'">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content modal-2">
+            <div class="modal-header mt-4">
+              <h4 class="modal-title">Task Details</h4>
+            </div>
+            <div class="modal-body">
+              <form #loginForm="ngForm">
+                <div class="form-group">
+                  <div>
+                    <label class="control-label">Task Descriptions</label>
+                    <div>
+                      <textarea cols="15" rows="2" class="form-control input-lg comment" name="task"
+                        [(ngModel)]="taskDescription" maxlength="200"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <div class="modal-footer">
+                <div class="row">
+                  <div class="col-lg-6 col">
+                    <button class="btn btn-primary btn-block" (click)="submitTaskData()">
+                      Submit
+                    </button>
+                  </div>
+                  <div class="col-lg-6 col">
+                    <button class="btn btn-danger btn-block" #closebutton data-dismiss="modal">
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p-toast></p-toast>
+
+
+    </ng-container>
+  </ng-container>
+
+</sb-layout-dashboard>

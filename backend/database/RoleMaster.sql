@@ -1,0 +1,24 @@
+USE [atdms]
+GO
+
+/****** Object:  Table [dbo].[RoleMaster]    Script Date: 14-12-2021 11:30:04 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[RoleMaster](
+	[RoleId] [int] IDENTITY(1,1) NOT NULL,
+	[RoleName] [nvarchar](max) NULL,
+	[AddedOn] [datetime] NULL,
+	[AddedBy] [int] NULL,
+	[IsActive] [int] NULL,
+ CONSTRAINT [PK_RollMaster] PRIMARY KEY CLUSTERED 
+(
+	[RoleId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+

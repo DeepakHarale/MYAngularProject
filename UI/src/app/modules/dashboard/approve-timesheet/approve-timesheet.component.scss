@@ -1,0 +1,60 @@
+:host ::ng-deep {
+    .custom-warning{
+        width:70% !important;
+        padding-top: 10px;
+        .p-button{
+            background: rgb(56, 113, 236) !important;
+            color: white !important;
+            border: rgb(56, 113, 236) !important ;
+        
+                
+        
+        }
+    }
+    .custom-success{
+        width:57% !important;
+        padding-top: 10px;
+        .p-button{
+            background: green !important;
+            color: white !important;
+            border: green !important;
+           
+        }
+    }
+    .custom-danger{
+        width:57% !important;
+        padding-top: 10px;
+        .p-button{
+            background: red !important;
+            color: white !important;
+            border: red !important;
+           
+        }
+    }
+}
+:host ::ng-deep {
+    td {
+        word-wrap: break-word;
+    }
+
+    .row{
+        margin-bottom: 2px;
+        margin-left: 2px;
+    }
+    .row-1{
+      height: 1px;
+    }
+    
+}
+
+:host ::ng-deep {
+    .th-bgcolour{
+        background-color:#24a0ed !important;color: #fff !important;
+    }
+     
+     
+  }
+
+
+
+

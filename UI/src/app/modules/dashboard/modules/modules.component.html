@@ -1,0 +1,236 @@
+<sb-layout-dashboard>
+
+          
+    <!-- <div *ngIf="!isAddModule">
+        <div class="row justify-content-between mb-3 mt-4">
+          <div class="col-sm-4">
+    
+            <h4> Module List</h4>
+          </div>         
+          
+    
+            <div class="col-sm-4 d-flex flex-row-reverse">
+                <button pButton type="button" icon="pi pi-plus-circle" label="Add Module"
+                  class="p-button-secondary p-button-sm" (click)="AddProjectModule()"></button>
+              </div>
+
+              {{getModuleData.data|json}}
+          <p-table [columns]="[]" [value]="getModuleData" styleClass="p-datatable-responsive-demo" class="table mt-2 table-striped"
+            [rowsPerPageOptions]="rowsPerPageOptions" [paginator]="true" [rows]="10" styleClass="p-datatable-sm">
+            <ng-template pTemplate="header" let-columns>
+                
+              <tr>
+    
+                <th>Module Name </th>
+                <th>Module Description</th>
+                <th>Edit</th>
+                <th>Delete</th>
+    
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item>
+              <tr>
+    
+                <td>{{item.moduleName}}</td>
+    
+                <td>{{item.moduleDesc}}</td>
+              
+    <td>
+        <a (click)="onUpdate(item)" *ngIf="item.moduleId!=0" class="fa fa-edit " style="font-size:20px">
+        </a>
+    </td>
+                   
+                <td><i (click)="onDeleted($event,item)" [hidden]="isDeleteHide" class="pi pi-times-circle icon icon-delete"
+                    pTooltip="Delete" tooltipPosition="top"></i></td>
+    
+    
+              </tr>
+            </ng-template>
+          </p-table>
+    
+        </div>
+    
+      </div>
+    
+      <div class="container" *ngIf="isAddModule">
+        <div class="row justify-content-center ">
+          <div class="col-lg-12">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+              <div class="card-header">
+    
+                <h3 class="text-center">Project Task Details</h3>
+              </div>
+              <div class="card-body">
+                <form [formGroup]="ProjectTaskForm">
+    
+                  <div class="card ">
+    
+                    <div class="form-group"><label class="mb-1" for="projectName">Role Name</label><span
+                        style="color:red;size:5px;">*</span>
+    
+                      <ng-select name="projectName" [items]="GetProjectData" bindLabel="projectName" bindValue="projectId" [ngClass]="{ 'is-invalid': submitted && f.projectId.errors }"
+                        formControlName="projectId" >
+                      </ng-select>
+                      <div *ngIf="submitted && f?.projectId?.errors">
+                        <span *ngIf="f?.projectId?.errors?.required" class="error-msg small">project name is
+                          required.</span>
+                      </div>
+                    </div>
+    
+                    <div class="form-row">
+                      <div class="col-md-6">
+    
+                        <div class="form-group"><label name="moduleName" class="mb-1" for="moduleName">Module
+                            Name </label><span style="color:red;size:5px;">*</span>
+                          <input autocomplete="off" class="form-control " id="moduleName"
+                            formControlName="moduleName" type="text" [ngClass]="{ 'is-invalid': submitted && f.projectsTaskType.errors }" />
+                          <div *ngIf="submitted && f?.moduleName?.errors">
+                            <span *ngIf="f?.moduleName?.errors?.required" class="error-msg small">projects Task Type
+                              is
+                              required.</span>
+                          </div>
+                        </div>
+                      </div>
+                   
+                    </div>
+                    <div style="text-align: center;">
+    
+                      <button type="button" *ngIf="!isUpdateProjectTask" pButton class="p-button-success float-right "
+                        (click)="onSubmit()">Save</button>
+                      <button type="button" *ngIf="isUpdateProjectTask" class="btn btn-primary float-right"
+                        (click)="UpdateTask()">Update</button> &nbsp;&nbsp;
+                      <button type="button" (click)="onBackToList(false)" pButton class="p-button-warning float-left">Back
+                        To
+                        List</button>
+                    </div>
+    
+                  </div>
+    
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    
+      <div class="container">
+        <div class="row justify-content-center ">
+          <div class="col-lg-12">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+              <div class="card-header">
+    
+                <h3 class="text-center">Project Task Details</h3>
+              </div>
+              <div class="card-body">
+                <form [formGroup]="ProjectTaskForm">
+    
+                  <div class="card ">
+    
+                    <div class="form-group"><label class="mb-1" for="projectName">Project Name</label><span
+                        style="color:red;size:5px;">*</span>
+    
+                      <ng-select name="projectName" [items]="GetProjectData" bindLabel="projectName" bindValue="projectId" [ngClass]="{ 'is-invalid': submitted && f.projectId.errors }"
+                        formControlName="projectId" >
+                      </ng-select>
+                      <div *ngIf="submitted && f?.projectId?.errors">
+                        <span *ngIf="f?.projectId?.errors?.required" class="error-msg small">project name is
+                          required.</span>
+                      </div>
+                    </div>
+    
+                    <div class="form-row">
+                      <div class="col-md-6">
+    
+                        <div class="form-group"><label name="projectsTaskType" class="mb-1" for="projectsTaskType">Projects
+                            Task </label><span style="color:red;size:5px;">*</span>
+                          <input autocomplete="off" class="form-control " id="projectsTaskType"
+                            formControlName="projectsTaskType" type="text" [ngClass]="{ 'is-invalid': submitted && f.projectsTaskType.errors }" />
+                          <div *ngIf="submitted && f?.projectsTaskType?.errors">
+                            <span *ngIf="f?.projectsTaskType?.errors?.required" class="error-msg small">projects Task Type
+                              is
+                              required.</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group"><label class="mb-1" for="prorities">Priorities</label><span
+                            style="color:red;size:5px;">*</span>
+                          <select autocomplete="off" class="form-control " formControlName="prorities" id="prorities" [ngClass]="{ 'is-invalid': submitted && f.prorities.errors }"
+                            type="text" placeholder="Select Priorities">
+                            
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            
+                          </select>
+                          <div *ngIf="submitted && f?.prorities?.errors">
+                            <span *ngIf="f?.prorities?.errors?.required" class="error-msg small">Priorities
+                              required.</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-row">
+    
+                      <div class="col-md-6">
+    
+                        <div class="form-group"><label name="projectsTaskType" class="mb-1" for="projectsTaskType">Project
+                            Task Description </label><span style="color:red;size:5px;">*</span>
+                          <textarea autocomplete="off" class="form-control " id="projectsTaskType"
+                            formControlName="projectDescription" type="text" [ngClass]="{ 'is-invalid': submitted && f.projectsTaskType.errors }"></textarea>
+                          <div *ngIf="submitted && f?.projectDescription?.errors">
+                            <span *ngIf="f?.projectDescription?.errors?.required" class="error-msg small">Project Task
+                              Description is
+                              required.</span>
+                          </div>
+                        </div>
+                      </div>
+    
+    
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="mb-1" for="workingHours">Working Hours</label><span
+                            style="color:red;size:5px;">*</span><input autocomplete="off" maxlength="5"
+                            class="form-control " id="workingHours" formControlName="workingHours" type="text" [ngClass]="{ 'is-invalid': submitted && f.workingHours.errors }"
+                            (keypress)="numberOnly($event)" />
+                          <div *ngIf="submitted && f.workingHours.errors" class="error-msg small">
+                            <div *ngIf="f.workingHours.errors?.required">Number is required.</div>
+                            <div *ngIf="f.workingHours.errors?.max">Max hours is 15</div>
+                          </div>
+                        </div>
+    
+                      </div>
+                    </div>
+                    <div style="text-align: center;">
+    
+                      <button type="button" *ngIf="!isUpdateProjectTask" pButton class="p-button-success float-right "
+                        (click)="onSubmit()">Save</button>
+                      <button type="button" *ngIf="isUpdateProjectTask" class="btn btn-primary float-right"
+                        (click)="UpdateTask()">Update</button> &nbsp;&nbsp;
+                      <button type="button" (click)="onBackToList(false)" pButton class="p-button-warning float-left">Back
+                        To
+                        List</button>
+                    </div>
+    
+                  </div>
+    
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+     -->
+    
+  <p-toast></p-toast>
+
+
+
+  <p-confirmPopup></p-confirmPopup>
+    
+
+</sb-layout-dashboard>
+

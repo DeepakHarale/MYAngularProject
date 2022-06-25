@@ -1,0 +1,154 @@
+<sb-layout-dashboard>
+
+
+    <div class="col-sm-10 mb-4" style="padding-top: 10px;">
+        <h4 style="display: inline;">Approve Timesheet({{filteredData?.length ||'0'}})</h4>
+    </div>
+
+    <div class="row mb-2">
+        <div>
+            <button class="btn btn-success " (click)="displayPrevWeek()">
+                Prevoius Week
+            </button>
+        </div>
+
+
+
+        <div style="margin-right: 850px;">
+            <button
+                *ngIf=" currentYear <= weekYear &&   currentWeekNumber > weekNumber || currentWeekNumber< weekNumber"
+                class="btn btn-success ml-4" (click)="displayNextWeek()">
+                Next Week
+            </button>
+        </div>
+
+        <!-- <div>
+            <ng-container>
+                <p-splitButton class="float-right p-splitButton" label="Download" icon="pi pi-download"
+                (onClick)="btnsplit.onDropdownButtonClick()" #btnsplit [model]="items"></p-splitButton>
+            </ng-container>
+            
+        </div> -->
+
+    </div>
+
+
+
+    <p-table [value]="filteredData" dataKey="employeeNo" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+            <tr class="row-1">
+                <th style="width: 3rem" class="th-bgcolour"></th>
+                <th class="th-bgcolour">Employee Name </th>
+                <th class="th-bgcolour">From Date </th>
+                <th class="th-bgcolour">To Date</th>
+                <th class="th-bgcolour">Status</th>
+                
+
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product let-expanded="expanded">
+            <tr class="row-1">
+                <td>
+                    <button type="button" pButton pRipple [pRowToggler]="product"
+                        class="p-button-text p-button-rounded p-button-plain"
+                        [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                </td>
+                <td>{{product.employeeName}}</td>
+                <td>{{product.weeklyTimeSheet.mondayDate | date: "dd/MM/yyyy"}}</td>
+                <td>{{product.weeklyTimeSheet.sundayDate | date: "dd/MM/yyyy"}}</td>
+
+                <td>
+                    <p-splitButton label="{{product.weeklyTimeSheet.status}}"
+                        [styleClass]="getColor(product.weeklyTimeSheet.status)" #btnsplit
+                        (onClick)="btnsplit.onDropdownButtonClick()"
+                        [model]="statusItem[product.weeklyTimeSheet.employeeId]"></p-splitButton> &nbsp; &nbsp; &nbsp;
+                        <i class="pi pi-file-excel" pTooltip="Download excel report" style="font-size:36px; color: green; margin-top: 2px; cursor: pointer;" (click)="exportexcel(product)"></i>
+                        <i class="pi pi-file-pdf" pTooltip="Download pdf report" style="font-size:36px; color: red; margin-top: 2px; cursor: pointer;" (click)="exportPdf(product)"></i>
+                   
+                </td>
+
+                
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="rowexpansion" let-product>
+            <tr>
+                <td colspan="5">
+                    <div class="p-p-3">
+                        <p-table [value]="product.weekData" dataKey="employeeNo">
+                            <ng-template pTemplate="header">
+            <tr>
+                <th>Project - Task </th>
+                <th>Monday </th>
+                <th>Tuesday </th>
+                <th>Wednesday </th>
+                <th>Thursday </th>
+                <th>Friday </th>
+                <th>Saturday </th>
+                <th>Sunday </th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+            <tr>
+                <td>{{item.projectName}} - {{item.projectTask.projectsTaskType}}</td>
+                <td>{{item.weeklyTimeSheet.mondayhr}} <hr>
+                    {{item.weeklyTimeSheet.mondayDescription}} 
+                 </td>
+                <td>{{item.weeklyTimeSheet.tuesdayhr}} <hr>
+                    {{item.weeklyTimeSheet.tuesdayDescription}} </td>
+                <td>{{item.weeklyTimeSheet.wednesdayhr}} <hr>
+                    {{item.weeklyTimeSheet.wednesdayDescription}} </td>
+                <td>{{item.weeklyTimeSheet.thursdayhr}} <hr>
+                    {{item.weeklyTimeSheet.thursdayDescription}} </td>
+                <td>{{item.weeklyTimeSheet.fridayhr}} <hr>
+                    {{item.weeklyTimeSheet.fridayDescription}} </td>
+                <td>{{item.weeklyTimeSheet.saturdayhr}} <hr>
+                    {{item.weeklyTimeSheet.saturdayDescription}} </td>
+                <td>{{item.weeklyTimeSheet.sundayhr}}<hr>
+                    {{item.weeklyTimeSheet.sundayDescription}} </td>
+
+                 
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="6">There are no order for this product yet.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+    </div>
+    </td>
+    </tr>
+    </ng-template>
+    </p-table>
+
+    <p-confirmDialog #cd [style]="{width: '25vw'}" appendTo="body">
+        <ng-template pTemplate="header">
+
+            <div>
+                <div class="row">
+                    <h6>Are you sure that you want to proceed?</h6>
+                </div>
+                <div class="row">
+                    <textarea rows="4" cols="35" [(ngModel)]="message" maxlength="40" pInputTextarea
+                        placeholder="Please enter message"></textarea>
+                </div>
+            </div>
+
+        </ng-template>
+
+
+
+        <ng-template pTemplate="footer">
+            <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+            <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
+        </ng-template>
+
+
+        
+    </p-confirmDialog>
+
+
+
+</sb-layout-dashboard>

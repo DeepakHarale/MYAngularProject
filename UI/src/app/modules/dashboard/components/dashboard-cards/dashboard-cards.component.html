@@ -1,0 +1,109 @@
+
+<div class="row">
+  <div class="col-xl-8 col-md-4">
+    <ngb-carousel *ngIf="GethighlightModel" [showNavigationArrows]="showNavigationArrows" [showNavigationIndicators]="showNavigationIndicators">
+     
+      <ng-template *ngFor="let product of GethighlightModel" ngbSlide>
+        <div class="picsum-img-wrapper">
+         
+            <div class="p-mb-3 col-md-11">
+              <img [src]="geturl(product)" height="420px" width="110%" style="border-radius: 4%! important;" [alt]="product.highlightsTitle"
+                class="product-image" /><br>
+                <div class="product-carousel-caption center">
+                  <!-- <div class="alert alert-warning alert-dismissible fade show" style="margin-left: 250px;" role="alert">
+                    <strong><h2>{{product.highlightsTitle}}!</h2></strong>
+                    <p style="text-indent: 0cm;">{{product.highlightsDescription}}</p>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div> -->
+              <h4 style="text-align: center;color:black">{{product.highlightsTitle}}</h4>
+              <h6 style="text-align: center;">{{product.highlightsDescription}}</h6> 
+
+             </div>
+            <div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="carousel-item active">
+            <img [src]="geturl(product)" height="400px" width="500px" class="d-block w-100"
+              alt="Sunset Over the City" />
+              <div class="carousel-caption d-none d-md-block">
+                  <h4>{{product.highlightsTitle}}</h4>
+                  <p>{{product.highlightsDescription}}</p>
+                </div>
+          </div> -->
+      </ng-template>
+    </ngb-carousel>
+    <!-- <div class="btn-group" role="group" aria-label="Carousel toggle controls">
+      <button type="button" (click)="showNavigationArrows = !showNavigationArrows" class="btn btn-outline-dark btn-sm">Toggle navigation arrows</button>
+      <button type="button" (click)="showNavigationIndicators = !showNavigationIndicators" class="btn btn-outline-dark btn-sm">Toggle navigation indicators</button>
+    </div> -->
+  </div><br><br>
+
+  <div class="container-fuild ">
+    <div class="row ">
+      <div class="col-xl-4 col-md-4 ">
+        <div class="card text-white card-has-bg click-col"
+          style="background-image:url('https://source.unsplash.com/600x900/?tech,street');">
+          <img class="card-img d-none" src="https://source.unsplash.com/600x900/?tech,street"
+            alt="Goverment Lorem Ipsum Sit Amet Consectetur dipisi?">
+          <div class="card-img-overlay d-flex flex-column  scrollbar">
+
+            <div class="container  mb-5 d-flex justify-content-center">
+              <div class="card-header">
+
+                <h2 style="text-align: center; margin-top: -36px;
+                 font-family:Algerian ;" class="text-red blink-hard">
+                  TO DO LIST</h2>
+
+                <form [formGroup]="TodoForm">
+
+                  <input autocomplete="off" class="form-control " id="description" placeholder="Enter the note..."
+                    formControlName="description" type="text" maxlength="50" />
+                  <div *ngIf="submitted && f?.description?.errors" style="text-align: center;">
+                    <span *ngIf="f?.description?.errors?.required" class="error-msg medium mb-2"> Enter the note
+                    </span>
+                  </div>
+
+                  <button type="button" (click)="resetForm()" pButton class="p-button-secondary float-left"
+                    pTooltip="Reset"><span class="fa fa-repeat"></span></button>
+                  <button type="submit" pButton class="p-button-secondary float-right " *ngIf="!isUpdateTodo"
+                    pTooltip="Save" (click)="onSubmit()"><span class="fa fa-save"></span></button>
+                  <button type="button" *ngIf="isUpdateTodo " pButton class="p-button-secondary float-right"
+                    pTooltip="Update" (click)="UpdatToDoList()"><span class="fas fa-pen-square"></span></button>
+
+
+                </form><br><br>
+
+                <div *ngFor="let item of getToDoList">
+                  <div class="row">
+                    <div class="col-md-10 offset-md-0 ">
+                      <div class="alert alert-info" style="width:300px;">{{item.description}}
+                        <i (click)="updatedData(item)" class="btn btn-btn-sucess; fa fa-edit fa-lg" pTooltip="Edit"></i>
+                        <i (click)="onDeleted($event,item)" class="btn btn-btn-danger; far fa-trash-alt"
+                          pTooltip="Delete" tooltipPosition="top"></i>
+
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+
+    </div><br><br>
+
+  </div>
+
+  <p-toast></p-toast>
+
+
+
+  <p-confirmPopup></p-confirmPopup>

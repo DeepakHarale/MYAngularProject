@@ -1,0 +1,194 @@
+<sb-layout-dashboard>
+  <ng-container *ngIf="(sharedPermission.todos$ | async) as todo">
+    <ng-container *ngIf=" todo && todo[enumModule.Document]" >
+      <p-toast></p-toast>
+      <div class="mb-4 mt-4">
+        <div *ngIf="!isAddDocument">
+          <div class="row justify-content-between mb-3">
+            <div class="col-sm-4">
+              <h4>Document List({{rowData.length}})</h4>
+            </div>
+            <div class="col-sm-4 d-flex flex-row-reverse" >
+              <button pButton type="button" icon="pi pi-plus-circle" label="Add Document"  *ngIf="todo[enumModule.Document][enumPer.ADD]"
+                class="p-button-secondary p-button-sm" (click)="onAddDocument()"></button>
+            </div>
+          </div>
+          <p-table [columns]="cols" [value]="rowData" styleClass="p-datatable-responsive-demo"
+            class="table mt-2 table-striped" [rowsPerPageOptions]="rowsPerPageOptions" [paginator]="true" [rows]="5"
+            styleClass="p-datatable-sm">
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th *ngFor="let col of columns" class="th-bgcolour">
+                  {{col.header}}
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-doc>
+              <tr>
+                <td>{{doc.documentType.documentName}}</td>
+                <td style="align-content:center;">{{doc.document.documentName}}</td>
+                <td>{{doc.document.universityName}}</td>
+
+                <td style="text-align: center;">{{doc.document.percentage}}</td>
+                <td style="text-align: center;">{{doc.document.passYear}}</td>
+                <td>{{doc.document.createdAt | date :'dd-MM-yyyy'}}</td>
+                <td style="text-align: left;">
+
+                  <a (click)="updatedData(doc)"
+                    *ngIf="doc.documentTypeId!=0 && todo[enumModule.Document][enumPer.EDIT]"
+                    class="fa fa-edit " style="font-size:20px">
+                  </a> 
+                </td>
+                <td style="text-align: left;">
+
+                  <i (click)="onView(doc)" class="pi pi-eye icon icon-view" pTooltip="View" tooltipPosition="top"
+                    *ngIf="todo[enumModule.Document][enumPer.VIEW]"></i>
+                  </td>
+                  <td style="text-align: center;">
+                  <a (click)="download(doc)"><i class="pi pi-download icon icon-download" pTooltip="Download"
+                       tooltipPosition="top"></i></a>
+                  </td>
+                  <td style="text-align:left">
+
+                  <i (click)="onDeleted($event,doc)" [hidden]="isDeleteHide" class="pi pi-times-circle icon icon-delete"
+                    *ngIf="todo[enumModule.Document][enumPer.DELETE]" pTooltip="Delete" tooltipPosition="top"></i>
+
+                  <!-- <i class="pi pi-pencil-square"></i> -->
+
+                  <!-- (click)="updatedData(doc) -->
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+
+        <div id="accordion" *ngIf="isAddDocument">
+          <div class="card card-default">
+            <div class="card-header">
+              <div class="d-flex justify-content-between">
+                <h4 class="text-center">Upload Document</h4>
+
+                <button pButton type="button" class="p-button-warning p-button-sm" (click)="onBackToList(false)"> Back
+                  to
+                  List</button>
+              </div>
+
+            </div>
+            <div id="collapse1" class="collapse show">
+              <div class="card-body">
+                <form [formGroup]="uploadDocumentForm">
+                  <div class="p-grid p-fluid row">
+                    <div class="p-field col-sm-4 form-group">
+                      <label>Document Type</label><span style="color:red;size:5px;">*</span>
+                      <p-dropdown placeholder="Select a type" [options]="documentTypeList" optionValue="documentId"
+                        (onChange)="selectDocumentType()" optionLabel="documentName" formControlName="documentTypeId"
+                        *ngIf="!isView">
+                      </p-dropdown>
+                      <!-- <p-dropdown [options]="cities" [(ngModel)]="selectedCity1" placeholder="Select a City" optionLabel="name" [showClear]="true"></p-dropdown> -->
+
+                      <div *ngIf="submitted && f?.documentTypeId?.errors">
+                        <span *ngIf="f?.documentTypeId?.errors?.required" class="error-msg"> Document type is a
+                          required.</span>
+                      </div>
+                    </div>
+                    <div class="p-field col-sm-4 form-group">
+
+                      <label>{{documentLebel.documentName}}</label><span style="color:red;size:5px;">*</span>
+                      <input pInputText type="text" autocomplete="off" name="documentName"
+                        formControlName="documentName" [placeholder]="documentLebel.documentNamePH " />
+                      <div *ngIf="submitted && f?.documentName?.errors ">
+                        <span *ngIf="f?.documentName?.errors?.required" class="error-msg">{{documentLebel.documentName}}
+                          is a
+                          required.</span>
+                      </div>
+                    </div>
+
+                    <div class="p-field col-sm-4  form-group">
+                      <label>{{documentLebel.universityName}}</label><span style="color:red;size:5px;">*</span>
+                      <input pInputText type="text" autocomplete="off" name="universityName"
+                        formControlName="universityName" [placeholder]="documentLebel.universityNamePH" />
+                      <div *ngIf="submitted && f?.universityName?.errors">
+                        <span *ngIf="f?.universityName?.errors?.required" class="error-msg">
+                          {{documentLebel.universityName}} name is a
+                          required.</span>
+                      </div>
+                    </div>
+
+                    <div class="p-field col-sm-4  form-group" *ngIf="documentLebel.percentage">
+                      <label>{{documentLebel.percentage}}</label><span style="color:red;size:5px;">*</span>
+                      <div class="input-group-append">
+                        <input pInputText type="text" name="percentage" formControlName="percentage"
+                          [placeholder]="documentLebel.percentagePH " maxlength="5" (keypress)="numberOnly($event)" />
+                      </div>
+                      <div *ngIf="submitted && f?.percentage?.errors">
+                        <span *ngIf="f?.percentage?.errors?.required" class="error-msg"> {{documentLebel.percentage}} %
+                          is a
+                          required.</span>
+                        <span *ngIf="f.percentage.errors?.min" class="error-msg"> eligible only 40% above.</span>
+                        <span *ngIf="f.percentage.errors?.max" class="error-msg"> allowed only xx.xx format.</span>
+                      </div>
+                    </div>
+                    <div class="p-field col-sm-4  form-group" *ngIf="documentLebel.passYear">
+                      <label>{{documentLebel.passYear}}</label><span style="color:red;size:5px;">*</span>
+                      <input pInputText type="text" name="passYear" (keypress)="numberOnly($event)"
+                        formControlName="passYear" [placeholder]="documentLebel.passYearPH" maxlength="4" />
+
+                      <div *ngIf="submitted && f?.passYear?.errors">
+                        <div *ngIf="f?.passYear?.errors?.required" class="error-msg ">{{documentLebel.passYear}} is
+                          required.
+                        </div>
+
+                        <div *ngIf="f?.passYear?.errors?.pattern" class="error-msg ">Please Enter 4 digit only.
+                        </div>
+                        <span *ngIf="f?.passYear?.errors?.min" class="error-msg"> valid year 1950 and above only.</span>
+
+                        <span *ngIf="f?.passYear?.errors?.max" class="error-msg"> Please enter year after 1950
+                          <!-- {{currentYear}}. -->
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-grid p-fluid row" *ngIf="isUpdateDocument">
+                    <div class="p-field col-sm-12 form-group">
+                      <p-fileUpload name="myfile[]" customUpload="true" (onSelect)="onSelectFile($event)"
+                        (onClear)="onClear()" (uploadHandler)="myUploader($event)" accept=".png, .pdf , .jpg ,.jpeg">
+                      </p-fileUpload>
+                    </div>
+                  </div>
+
+                  <div class="p-grid p-fluid row" *ngIf="!isUpdateDocument">
+                    <div class="p-field col-sm-12 form-group">
+                      <!-- <p-fileUpload name="myfile[]" customUpload="true" (onSelect)="onSelectFile($event)"
+                  (onClear)="onClear()"  (uploadHandler)="myUploader($event)" accept=".png, .pdf , .jpg ,.jpeg">
+                  
+                  </p-fileUpload>
+
+                   -->
+                    
+                        <button type="button" class="btn btn-primary float-right"
+                          (click)="UpdatedDocument(obj)">Update</button>
+                      
+                    </div>
+
+                  </div>
+
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p-dialog header="" [(visible)]="display">
+        <div *ngIf="selectedDocument && fileType!=='pdf'">
+          <img width="700" height="500" [src]="geturl()" alt="">
+        </div>
+        <div *ngIf="selectedDocument && fileType==='pdf'">
+          <embed [src]="getSefUrl(apiUrl+selectedDocument['document']['documentPath'])" width="700" height="500">
+
+        </div>
+      </p-dialog>
+      <p-confirmPopup></p-confirmPopup>
+    </ng-container>
+  </ng-container>
+</sb-layout-dashboard>

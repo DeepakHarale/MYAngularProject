@@ -1,0 +1,64 @@
+<sb-layout-auth>
+    <div class="wrapper fadeInDown">
+        <div class="container-fuild">
+            <div class="row justify-content-center">
+                <div class="col-md-4 offset-md-8">
+                    <div class="card shadow-lg border-0 rounded-lg" style="background-color:#4b636e">
+                        <!-- <img src="assets/img/userlog.png" class="center" width="100px" height="150px"> -->
+                        <img src="assets/img/assimilatet_logo.png" class="center mt-4" alt=""><br>
+                        <i class="fa fa-user text-center mt-4" style="font-size:70px;color:#fafafa;"></i>
+                        <!-- <div class="card-header">
+                            <h4 class="text-center font-weight-light my-1">Login  </h4>
+                        </div> -->
+                        <div class="card-body mt-4">
+                            <form [formGroup]="loginForm">
+                                <div class="form-group">
+                                    <label class="small mb-1 text-white" style="font-size:15px"
+                                        for="inputEmailAddress">Email</label>
+                                    <input class="form-control py-4" id="inputEmailAddress" type="email"
+                                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                                        placeholder="Enter email address" formControlName="userName" />
+                                    <div *ngIf="submitted && f?.userName?.errors">
+                                        <span *ngIf="f?.userName?.errors?.required" class="error-msg"> Email
+                                            required.</span>
+                                        <span *ngIf="f?.userName?.errors?.pattern" class="error-msg"> Email not
+                                            valid.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-3">
+                                    <label class="small mb-1 text-white" style="font-size:15px"
+                                        for="inputPassword">Password</label>
+                                    <input class="form-control py-4" id="inputPassword" type="password"
+                                        placeholder="Enter password" formControlName="password" />
+                                    <div *ngIf="submitted && f?.password?.errors">
+                                        <span *ngIf="f?.password?.errors?.required" class="error-msg"> Password
+                                            required.</span>
+
+                                    </div>
+                                </div>
+                                <!-- <div class="form-group">
+                                    <div class="custom-control custom-checkbox"><input class="custom-control-input"
+                                            id="rememberPasswordCheck" type="checkbox" /><label
+                                            class="custom-control-label" for="rememberPasswordCheck">Remember
+                                            password</label></div>
+                                </div> -->
+                                <div class="error-msg text-center" *ngIf="isErrorMessage"> Invalid credentials.</div>
+                                <div class="form-group d-flex align-items-center justify-content-between mt-5">
+
+                                    <button type="submit" *ngIf="!showLoader" (click)="onLogin()" class="text-white btn btn-dark">Login</button>
+                                    <a class="small text-white" style="font-size:15px"
+                                        routerLink="/auth/forgot-password">Forgot Password?</a>
+                                    <div *ngIf="showLoader" style="text-align: center;">
+                                        <p-progressSpinner></p-progressSpinner>
+                                    </div>
+                                </div> <br><br><br><br><br><br>
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</sb-layout-auth>

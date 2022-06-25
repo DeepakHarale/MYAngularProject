@@ -1,0 +1,357 @@
+<sb-layout-dashboard>
+
+
+
+  <ng-container *ngIf="(sharedPermission.todos$ | async) as todo">
+    <ng-container *ngIf=" todo && todo[enumModule.EmployeeList]">
+
+      <div *ngIf="!isAddEmployee">
+
+        <div class="row justify-content-between mb-3 mt-4">
+          <div class="col-sm-4">
+
+            <!-- <h4>Employee Report({{ dataList?.length || '0'}})</h4> -->
+
+            <h4>Employee Report</h4>
+            <!-- {{dataList|json}} -->
+
+          </div>
+          <div class="col-sm-4 d-flex flex-row-reverse" *ngIf="todo[enumModule.EmployeeList][enumPer.ADD]">
+
+
+
+            <!-- <button pButton type="button" icon="pi pi-plus-circle" label="Add Employee"
+                    class="p-button-secondary p-button-sm" (click)="addEmployee()" ></button> -->
+
+          </div>
+        </div>
+        
+          <div class="form-Group">
+          <label>Search: </label>
+          {{searchKey}}
+        <input pInputText type="text" [(ngModel)]="searchKey" (input)="todoTable.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" class="ml-3">
+        <button type="button" class="btn btn-success" style="margin-left:50%" (click)="exportPdf(dataList)">ExportPdf</button>
+        <button type="button" class="btn btn-primary" style="margin-left:2%" (click)="exportExcel(dataList)">ExportExcel</button>
+
+        
+      </div><br><br>
+         
+      <p-table #todoTable [columns]="columns" [value]="dataList"  [scrollable]="true"  scrollHeight="400px" scrollDirection="both"
+        [globalFilterFields]="['employeeNo','employeeName','mobileNo','emailId','gender','mothersName','dateOfBirth','maritalStatus','spouseName',
+        'paddress Line1','paddress Line2','pcity','pstate','ppincode','joiningDate','division','employeeStatus']">
+        
+        <ng-template pTemplate="header">
+            <tr>
+              <th *ngFor="let col of columns" class="text-white" style="background-color:#24a0ed !important;" [style.width.px]="col.width">
+                {{col.header}}
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+              <td *ngFor="let col of columns" class="col-sm-3" [style.width.px]="col.width" style="overflow: hidden;">
+                {{rowData[col.field]}}
+              </td>
+              <td class="col-sm-2">
+                <i class="pi pi-file-excel" pTooltip="Download excel report" style="font-size:30px; color: green; margin-top: 2px; cursor: pointer;margin-right: 40px;" (click)="exportexcel(rowData)"></i>
+                <i class="pi pi-file-pdf" pTooltip="Download pdf report" style="font-size:30px; color: red; margin-top: 2px; cursor: pointer;" (click)="exportPdf(rowData)"></i>
+              </td>
+            
+                  
+            </tr>
+          </ng-template>
+      </p-table>
+    
+      
+      </div>
+      <div class="container" *ngIf="isAddEmployee">
+        <div class="row justify-content-center">
+          <div class="col-lg-12">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+              <div class="card-header">
+                <h3 class="text-center">Employee Account</h3>
+                <!-- {{registerEmployeeForm.value|json}} -->
+              </div>
+              <div class="card-body">
+               
+                <form [formGroup]="registerEmployeeForm" (ngSubmit)="onSubmit()">
+                  <div class="form-row">
+
+                    
+
+                    <div class="col-md-6"><label class="mb-1" for="employeeNo">Employee No</label><span
+                        style="color:red;size:5px;">*</span>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">AT</span>
+                        </div>
+                        <input autocomplete="off" class="form-control " formControlName="employeeNo" id="employeeNo"
+                          maxlength="10" type="text" placeholder="Enter Employee No" numbersOnly
+                          [ngClass]="{ 'is-invalid': submitted && f.roleId.errors }" />
+                      </div>
+                      <div *ngIf="submitted && f?.employeeNo?.errors">
+                        <span *ngIf="f?.employeeNo?.errors?.required" class="error-msg small">Employee No. is a
+                          required.</span>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+
+
+
+                        
+                      <div class="form-group">
+                        <label class="mb-1" for="employeeName1">Employee Name</label><span
+                          style="color:red;size:5px;">*</span><input maxlength="100" autocomplete="off"
+                          class="form-control " formControlName="employeeName" id="employeeName1" type="text"
+                          placeholder="Enter employee name"
+                          [ngClass]="{ 'is-invalid': submitted && f.roleId.errors }" />
+                        <div *ngIf="submitted && f?.employeeName?.errors">
+                          <span *ngIf="f?.employeeName?.errors?.required" class="error-msg small">Employee Name is a
+                            required.</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                  <div class="form-row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="mb-1" for="inputEmailAddress">Email</label><span
+                          style="color:red;size:5px;">*</span><input autocomplete="off" maxlength="100"
+                          class="form-control " formControlName="emailId" id="inputEmailAddress" type="email"
+                          aria-describedby="emailHelp" placeholder="Enter email address"
+                          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                          [ngClass]="{ 'is-invalid': submitted && f.roleId.errors }" />
+                        <div *ngIf="submitted && f?.emailId?.errors">
+                          <span *ngIf="f?.emailId?.errors?.required" class="error-msg small"> Email
+                            required.</span>
+                          <span *ngIf="f?.emailId?.errors?.pattern" class="error-msg small"> Please enter valid Email
+                            Address
+                            .</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="mb-1" for="gender">Gender</label><span style="color:red;size:5px;">*</span>
+                        <select *ngIf="!isView" id="gender" class="form-control"
+                          [ngClass]="{ 'is-invalid': submitted && f.roleId.errors }" formControlName="gender">
+                          <option value="">-Select Gender--</option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                          <option value="Transgender">Transgender</option>
+                        </select>
+                        <input id="gender" type="text" name="gender" formControlName="gender" autocomplete="off"
+                          class="form-control" [readonly]="isView" *ngIf="isView">
+                        <div *ngIf="submitted && f?.gender?.errors">
+                          <span *ngIf="f?.gender?.errors?.required" class="error-msg small">Gender is required.</span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="col-md-12 text-center" *ngIf="errorExists">
+                        <div class="error-msg small">{{errorExists}}
+                        </div>
+                      </div> -->
+                  </div>
+
+
+
+
+                  <div class="form-row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="mb-1" for="inputLastName">Mobile No</label><span
+                          style="color:red;size:5px;">*</span><input autocomplete="off" class="form-control "
+                          numbersOnly maxlength="10" formControlName="mobileNo"
+                          [ngClass]="{ 'is-invalid': submitted && f.roleId.errors }" id="inputLastName" type="text"
+                          placeholder="Enter mobile no" />
+                        <div *ngIf="submitted && f?.mobileNo?.errors">
+                          <span *ngIf="f?.mobileNo?.errors?.required" class="error-msg small">Mobile Number is required.
+                          </span>
+                        </div>
+
+                        <span *ngIf="f?.mobileNo?.errors?.pattern" class="error-msg small">Please Enter 10 digit Mobile
+                          Number.
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="mb-1" for="emergencyNo">Emergency Contact Number</label>
+                        <span style="color:red;size:5px;">*</span>
+                        <input autocomplete="off" class="form-control " numbersOnly maxlength="10"
+                          formControlName="emergencyNo" [ngClass]="{ 'is-invalid': submitted && f.roleId.errors }"
+                          id="inputLastName" type="text" placeholder="Enter emergency contact no." />
+                        <div *ngIf="submitted && f?.emergencyNo?.errors">
+                          <span *ngIf="f?.emergencyNo?.errors?.required" class="error-msg small">Emergency Number is
+                            required.
+                          </span>
+                        </div>
+
+                        <span *ngIf="f?.emergencyNo?.errors?.pattern" class="error-msg small">Please Enter 10 digit
+                          Mobile
+                          Number.
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-md-12 text-center" *ngIf="errorExists">
+                      <div class="error-msg small">{{errorExists}}
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                  <div class="form-row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="joiningDate">Joining Date</label><span style="color:red;size:5px;">*</span>
+                        <!-- <input id="joiningDate" type="date" name="joiningDate" formControlName="joiningDate" autocomplete="off" 
+                              placeholder="currentDate | date:'yyyy-MM-dd'" [ngClass]="{ 'is-invalid': submitted && f.roleId.errors }"
+                                  class="form-control" [readonly]="isView"> -->
+                        <input id="joiningDate" type="date" name="joiningDate"
+                          [ngClass]="{ 'is-invalid': submitted && f.roleId.errors }" formControlName="joiningDate"
+                          class="form-control" placeholder="{{currentDate | date:'yyyy-MM-dd'}}">
+                        <div *ngIf="submitted && f?.joiningDate?.errors">
+                          <span *ngIf="f?.joiningDate?.errors?.required" class="error-msg small">JoiningDate is
+                            required.</span>
+                        </div>
+                      </div>
+
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                      <div class="form-group">
+                        <label for="division">Division</label><span style="color:red;size:5px;">*</span>
+                        <input id="division" type="text" name="division"
+                          [ngClass]="{ 'is-invalid': submitted && f.roleId.errors }" formControlName="division"
+                          autocomplete="off" class="form-control" [readonly]="isView">
+                        <div *ngIf="submitted && f?.division?.errors">
+                          <span *ngIf="f?.division?.errors?.required" class="error-msg small">Division is
+                            required.</span>
+                          <span *ngIf="f?.division?.errors?.max" class="error-msg small">Max number limit is 50</span>
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+
+
+                  <div class="form-row">
+
+                    <div class="col-md-6">
+
+                      <div class="form-group">
+                        <label for="department">Department</label><span style="color:red;size:5px;">*</span>
+                        <!-- <input id="department" type="text" name="department"
+                              formControlName="department" autocomplete="off"
+                              class="form-control" [readonly]="isView"> -->
+                        <!-- <div *ngIf="submitted && f?.department?.errors">
+                                  <span *ngIf="f?.department?.errors?.required" class="error-msg small">Department is required.</span>
+                              </div> -->
+                        <select name="department" id="department" class="form-control" formControlName="department"
+                          placeholder="Select Department" [ngClass]="{ 'is-invalid': submitted && f.roleId.errors }">
+                          <!-- <option value="" selected>-Select Department-</option> -->
+                          <option value="HR">HR Department</option>
+                          <option value="Admin">Admin Department</option>
+                          <option value="IT ">IT Department</option>
+
+                        </select>
+                        <div *ngIf="submitted && f?.department?.errors">
+                          <span *ngIf="f?.department?.errors?.required" class="error-msg small">Department is
+                            required.</span>
+                          <span *ngIf="f?.department?.errors?.max" class="error-msg small">Max number limit is 50</span>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="inputUserName">Employee Status</label><span style="color:red;size:5px;">*</span>
+                        <select *ngIf="!isView" name="employeeStatus" id="employeeStatus"
+                          [ngClass]="{ 'is-invalid': submitted && f.roleId.errors }" class="form-control"
+                          formControlName="employeeStatus">
+                          <option value="" selected>-Select Employee Status-</option>
+                          <option value="Full Time">Full Time</option>
+                          <option value="Part Time">Part Time</option>
+                        </select>
+                        <input id="employeeStatus" type="text" name="name" formControlName="employeeStatus"
+                          autocomplete="off" class="form-control" [readonly]="isView" *ngIf="isView">
+                        <div *ngIf="submitted && f?.employeeStatus?.errors">
+                          <span *ngIf="f?.employeeStatus?.errors?.required" class="error-msg small">Employee status is
+                            required.</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="p-field col-sm-6 form-group ">
+
+                      <div class="form-group">
+                        <label class="mb-1" for="roleName" name="roleName">Role</label><span
+                          style="color:red;size:5px;">*</span>
+
+                        <div>
+                          <p-dropdown placeholder="Select a type" [options]="Getrole" optionValue="roleId"
+                            *ngIf="!isView" [ngClass]="{ 'is-invalid': submitted && f.roleId.errors }"
+                            optionLabel="roleName" formControlName="roleId" id="roleName"
+                            [style]="{'minWidth':'530px', 'width': '100px', 'height':'39px'}">
+                          </p-dropdown>
+                        </div>
+
+                        <div *ngIf="submitted && f?.roleId?.errors">
+                          <span *ngIf="f?.roleId?.errors?.required" class="error-msg small">Role type is required.
+                          </span>
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                    <div class="p-field col-sm-6 form-group ">
+                      <div class="form-group">
+                        <label class="mb-1" for="inputConfirmPassword">Password</label><span
+                          style="color:red;size:5px;">*</span><input maxlength="100" autocomplete="off"
+                          class="form-control " id="inputConfirmPassword" formControlName="password" readonly
+                          type="text" placeholder="Confirm password" />
+                      </div>
+
+                    </div>
+                  </div>
+
+
+
+
+                  <div class="mt-3"></div>
+
+                  
+                  <!-- <button type="button" (click)="onBackToList(false)" pButton class="p-button-warning float-left">Back
+                          To
+                          List</button>
+                        <button type="submit" pButton class="p-button-success float-right ">Save</button> -->
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <p-confirmPopup></p-confirmPopup>
+      <p-toast></p-toast>
+
+    </ng-container>
+  </ng-container>
+</sb-layout-dashboard>
+
+
+

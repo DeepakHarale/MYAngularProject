@@ -1,0 +1,18 @@
+.card-default {
+    margin-top: 20px;
+}
+
+.button {
+    float: right;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    
+
+}
+
+:host ::ng-deep {
+    .th-bgcolour {
+        background-color: #24a0ed !important;
+        color: #fff !important;
+    }
+}

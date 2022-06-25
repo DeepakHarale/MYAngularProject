@@ -1,0 +1,31 @@
+﻿ public AtdmsWebContext()
+        {
+
+        }
+        public AtdmsWebContext(DbContextOptions<AtdmsWebContext> options) : base(options)
+        {
+
+        }   
+
+        Scaffold-DbContext "Server=DESKTOP-8S75FRR\SQLEXPRESS;Database=atdms;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir EfModeles -Context AtdmsWebContext -Force
+
+
+
+
+
+        ************************************
+"Server=DESKTOP-8S75FRR\SQLEXPRESS;Initial Catalog=atdms;Trusted_Connection=True;
+
+        **************************************
+
+************************Sanjay PC**********************
+Scaffold-DbContext "Server=DESKTOP-92EO82C;Initial Catalog=atdms;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir EfModeles -Context AtdmsWebContext -Force
+
+
+Scaffold-DbContext "Server=103.120.176.15;Initial Catalog=atopdin_atdms;User Id=atopdin_atdms;Password=?Jdbm346" Microsoft.EntityFrameworkCore.SqlServer -OutputDir EfModeles -Context AtdmsWebContext -Force
+
+
+
+***********************Sanjay PC****************************
+
+

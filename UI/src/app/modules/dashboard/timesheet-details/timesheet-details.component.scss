@@ -1,0 +1,19 @@
+.class1{
+    color:#24a0ed;
+    text-align: center;
+}
+.class2{
+    color:red;
+    text-align: center;
+}
+.class3{
+    color:green;
+    text-align: center;
+}
+:host ::ng-deep {
+    .th-bgcolour{
+        background-color:#24a0ed !important;color: #fff !important;
+    }
+     
+     
+  }

@@ -1,0 +1,35 @@
+<sb-layout-dashboard>
+   
+    <div class="container mb-4">
+        <div class="row">
+          <div class="col-12">    
+            <div class="table-responsive">
+              <h2 class="col-sm">Timesheet Report</h2>
+              <table class="table mt-2 table-striped" >
+                <thead>
+                  <tr>  
+                    <th class="col-2 text-center th-bgcolour">From Date</th>
+                    <th class="col-3 text-center th-bgcolour">To Date</th>
+                    <th class="col-3 text-center th-bgcolour">Employee Name</th>
+                    <th class="col-6 text-center th-bgcolour">Project Name</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>    
+                <tbody>
+                  <tr *ngFor="let tData of timesheetData">            
+                    <td class="col-4 text-center">{{ tData.mondayDate  | date:'d-M-yyyy' }}</td>
+                    <td class="col-4 text-center">{{ tData.sundayDate | date:'d-M-yyyy' }}</td>
+                    <td class="col-4 text-center">{{tData.employeeId}}</td>
+                    <td>{{tData.projectsTaskId}}</td>
+                   <td>
+                    <i class="pi pi-file-excel" pTooltip="Download excel report" style="font-size:30px; color: green; margin-top: 2px; cursor: pointer;margin-right: 40px;" (click)="exportexcel(rowData)"></i>
+                    <i class="pi pi-file-pdf" pTooltip="Download pdf report" style="font-size:30px; color: red; margin-top: 2px; cursor: pointer;" (click)="exportPdf(rowData)"></i>
+                   </td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+    </div>
+</sb-layout-dashboard>

@@ -1,0 +1,179 @@
+<sb-layout-dashboard>
+
+  <ng-container *ngIf="(sharedPermission.todos$ | async) as todo">
+    <ng-container *ngIf=" todo && todo[enumModule.Projects]" >
+
+
+  <div *ngIf="!isAddProject">
+    <div class="row justify-content-between mb-3 mt-4">
+      <div class="col-sm-4">
+
+        <h4> Project List({{getProjectData?.length ||'0'}})</h4>
+      </div>
+
+      <div class="col-sm-4 d-flex flex-row-reverse">
+        <button pButton type="button" icon="pi pi-plus-circle" label="Add Project" *ngIf="todo[enumModule.Projects][enumPer.ADD]"
+          class="p-button-secondary p-button-sm"  (click)="AddProjectDetails()"></button>
+      </div>
+    </div>
+
+    <p-table [columns]="[]" [value]="getProjectData" styleClass="p-datatable-responsive-demo" class="table mt-2 table-striped"
+      [rowsPerPageOptions]="rowsPerPageOptions" [paginator]="true" [rows]="10" styleClass="p-datatable-sm">
+      <ng-template pTemplate="header" let-columns>
+        
+        <tr>
+         
+          <th class="th-bgcolour">Project Name</th>
+          <th class="th-bgcolour">Project Description</th>
+          <th class="th-bgcolour">Action</th>
+
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr>
+         
+          <td>{{item.projectName}}</td>
+          <td>{{item.projectDescription}}</td>
+          <!-- <td>
+              <a routerLink="/dashboard/view-details" [queryParams]="{ id:item.projectId}"><i
+                  class="pi pi-eye icon icon-view" pTooltip="View" tooltipPosition="top"></i></a>
+            </td> -->
+            <td><i *ngIf="todo[enumModule.Projects][enumPer.DELETE]" (click)="onDeleted($event,item)" [hidden]="isDeleteHide" class="pi pi-times-circle icon icon-delete"
+              pTooltip="Delete" tooltipPosition="top"></i>
+              <button class="ml-4 btn btn-primary" data-toggle="modal" (click)="loadAlldataList(item.projectId , item.projectName)" *ngIf="todo[enumModule.Projects][enumPer.EDIT]" data-target="#ModalTaskForm">Assign Resource</button>
+            </td>
+            
+        </tr>
+      </ng-template>
+    </p-table>
+
+  </div>
+  <div class="container" *ngIf="isAddProject">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+          <div class="card shadow-lg border-0 rounded-lg">
+          <div class="card-header">
+            <h3 class="text-center">Project Details</h3>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="ProjectForm">
+              <div>
+        
+                <div class="row my-3">
+ 
+                  <div class="col-md-12">
+                      <div class="form-group"><label class="mb-1" for="projectName">Project
+                          Name</label><span style="color:red;size:5px;" >*</span><input autocomplete="off" class="form-control"
+                          formControlName="projectName" id="projectName" type="text" />
+                  </div>
+                  <div *ngIf="submitted && getControl?.projectName?.errors">
+                    <span *ngIf="getControl?.projectName?.errors?.required" class="error-msg small">Project Name is 
+                      required.</span>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group"><label class="mb-1" for="projectDescription">Project Description</label><span style="color:red;size:5px;" >*</span>
+                      <textarea class="form-control" formControlName="projectDescription" ></textarea>
+              </div>
+              <div *ngIf="submitted && getControl?.projectDescription?.errors">
+                  <span *ngIf="getControl?.projectDescription?.errors?.required" class="error-msg small">Project Description is
+                    required.</span>
+                </div>
+              </div>
+              </div>
+       
+                <div>
+                  <button type="button" (click)="onBackToList(false)" pButton class="p-button-warning float-left">Back
+                    To
+                    List</button>
+                  <button type="submit" pButton class="p-button-success float-right " (click)="onSubmit()">Save</button>
+                </div>
+
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="ModalTaskForm" class="modal fade mt-8">
+   
+    <div class="modal-dialog"  role="document">
+      <div class="modal-content modal-2">
+        <div class="modal-header mt-2 ">
+        <div class="row">
+          <div class="form-group">
+            <div class="col mb-4"><h4 class="modal-title">Assign Resource To Project - {{projectName}}</h4></div>
+            <div class="col"><input type="search" [(ngModel)]="filterValueLower"  (keyup)="applyFilter($event.target.value) " placeholder="Serach any fields" /></div>
+           </div>
+        </div>
+        </div>
+        <div class="modal-body " style="height: 200px; overflow: auto;">
+          <form [formGroup]="EmployeeProject">
+            
+            <!-- style="max-width: 60%; height: 800px ;overflow-y:scroll; " -->
+                <table class="table " >
+                 
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">Select</th>
+                      <th scope="col">Employee Id</th>
+                      <th scope="col">Employee Name</th>
+               
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let employee of employees ">
+                      <!-- [value]="s[employee.id]" -->
+                      
+                      <td class="text-center" ><input type="checkbox" name="check" [checked]="selectedEmployeeProjects[employee.employeeId]" id="checkId" [value]="selectedEmployeeProjects[employee.employeeId]"
+                        (change)="onChange($event.target.checked,employee.employeeId)"
+                        ></td>
+                      <td>{{employee.employeeNo}}</td>
+                      <td>{{employee.employeeName}}</td>
+                    </tr>
+                  </tbody>
+                 
+                  </table>
+              
+          </form>
+         
+        </div>
+        <div class="modal-footer">
+          <div class="row">
+            <div class="col-lg-6 col" >
+              <button type="button"  
+                class="btn btn-primary btn-block"
+               
+                (click)="onEmployeesubmit()"
+              >
+                Submit
+              </button>
+            </div>
+            <div class="col-lg-6 col">
+              <button
+                class="btn btn-danger btn-block"
+                type="reset"
+                #closebutton
+                data-dismiss="modal"
+                (click)="clearForm()"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </div>
+  <p-toast></p-toast>
+
+  <p-confirmPopup></p-confirmPopup>
+
+</ng-container>
+</ng-container>
+
+</sb-layout-dashboard>

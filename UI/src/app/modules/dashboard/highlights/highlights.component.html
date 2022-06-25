@@ -1,0 +1,180 @@
+<sb-layout-dashboard>
+
+  <div *ngIf="!isAddHighlights">
+    <div class="row justify-content-between mb-3 mt-4">
+      <div class="col-sm-4" > 
+
+        <h4>Highlights List({{getHighlights?.length}})</h4>
+        <!-- {{getHighlights}} -->
+      </div>
+
+      <div class="col-sm-4 d-flex flex-row-reverse">
+        <button pButton type="button" icon="pi pi-plus-circle" label="Add Highlights"
+          class="p-button-secondary p-button-sm" (click)="AddHighlightDetails()"></button>
+      </div>
+    </div>
+
+
+
+    <p-table [columns]="[]" [value]="getHighlights" styleClass="p-datatable-responsive-demo"
+      class="table mt-2 table-striped" [rowsPerPageOptions]="rowsPerPageOptions" [paginator]="true" [rows]="5"
+      styleClass="p-datatable-sm">
+      <ng-template pTemplate="header" let-columns>
+        <tr >
+          <th  class="th-bgcolour col-sm-1 bg">Id</th>
+          <th class="th-bgcolour col-sm-4">Highlights Path</th>
+          <th class="th-bgcolour col-sm-3">Highlights Title</th>
+          <th class="th-bgcolour col-sm-3">Highlights Description</th>
+          <th class="th-bgcolour col-sm-2">Action</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr>
+          <td class="col-sm-1">{{item.highlightsId}}</td>
+          <!-- <td class="col-sm-4">{{item.highlightsPath}}</td> -->
+         <td> <img width="200" height="200" [src]="geturl(item)" alt="">
+         </td>
+          <td class="col-sm-4">{{item.highlightsTitle}}</td>
+
+          <td class="col-sm-3">{{item.highlightsDescription}}</td>
+          <td class="col-sm-2">
+            <i (click)="updatedData(item)" *ngIf="item.highlightsId!=0 " class="fa fa-edit" style="font-size:20px">
+            </i> &nbsp;
+            <i (click)="onDeleted($event,item)" [hidden]="isDeleteHide" class="pi pi-times-circle icon icon-delete"
+            pTooltip="Delete" tooltipPosition="top"></i>
+          </td>
+
+        </tr>
+      </ng-template>
+    </p-table>
+
+  </div>
+
+
+  <div class="container" *ngIf="isAddHighlights">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card shadow-lg border-0 rounded-lg">
+          <div class="card-header">
+            <h3 class="text-center">Highlights</h3>
+          </div>
+          <div class="card-body">
+
+
+            <form [formGroup]="HighlightsForm">
+
+              <div class="p-grid p-fluid row " style="padding-left: 3%;padding-right: 3%;">
+                <div class="p-field col-sm-12 form-group">
+                  <label name="highlightsPath" class="mb-1" for="highlightsPath">Highlights Path</label>
+                  <!-- <label>Highlights Path</label> -->
+
+                  <input class="form-control " id="highlightsPath" formControlName="highlightsPath" type="file"
+                    (change)="onSelectFile($event)" placeholder="Enter a path"
+                    style="padding-bottom: 5%;padding-top: 0.5%;" autocomplete="off"
+                    [ngClass]="{ 'is-invalid': submitted && f.highlightsPath.errors }" />
+                  <div *ngIf="submitted && f?.highlightsPath?.errors">
+                    <span *ngIf="f?.highlightsPath?.errors?.required" class="error-msg small"> HighLights path
+                      required.</span>
+                    <!-- <span *ngIf="f?.highlightsPath?.errors?.pattern" class="error-msg small"> Please enter valid ress
+                              .</span> -->
+                  </div>
+
+
+
+                </div>
+              </div>
+
+              <div class="p-grid p-fluid row " style="padding-left: 3%;padding-right: 3%;">
+                <div class="p-field col-sm-12 form-group">
+                  <label name="highlightsTitle" class="mb-1" for="highlightsTitle">Highlights Title</label>
+
+                  <input autocomplete="off" class="form-control "  maxlength="20" id="highlightsTitle" formControlName="highlightsTitle"
+                    type="text" placeholder="Enter a title"
+                    [ngClass]="{ 'is-invalid': submitted && f.highlightsTitle.errors }" />
+                  <div *ngIf="submitted && f?.highlightsTitle?.errors">
+                    <span *ngIf="f?.highlightsTitle?.errors?.required" class="error-msg small"> HighLights title
+                      required.</span>
+                    <!-- <span *ngIf="f?.highlightsPath?.errors?.pattern" class="error-msg small"> Please enter valid ress
+                            .</span> -->
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="p-grid p-fluid row " style="padding-left: 3%;padding-right: 3%;">
+                <div class="p-field col-sm-12  form-group">
+                  <label name="highlightsDescription" class="mb-1" for="highlightsDescription">Highlights
+                    Description</label>
+
+
+                  <input autocomplete="off" class="form-control " maxlength="50" id="highlightsDescription"
+                    formControlName="highlightsDescription" type="text" placeholder="Enter a description"
+                    [ngClass]="{ 'is-invalid': submitted && f.highlightsDescription.errors }" />
+
+                  <div *ngIf="submitted && f?.highlightsDescription?.errors">
+                    <span *ngIf="f?.highlightsDescription?.errors?.required" class="error-msg small"> HighLights
+                      description
+                      required.</span>
+                    <!-- <span *ngIf="f?.highlightsPath?.errors?.pattern" class="error-msg small"> Please enter valid ress
+                            .</span> -->
+                  </div>
+                </div>
+              </div>
+
+              <div>
+
+                <button type="button" pButton class="p-button-warning float-left" (click)="onBackToList(false)">Back To
+                  List</button>
+                <button type="submit" pButton class="p-button-success float-right " (click)="onSubmit($event)"
+                  *ngIf="!isUpdateHighlights">Save</button>
+
+
+                <!-- <p-fileUpload name="myfile[]" customUpload="true" (onSelect)="onSelectFile($event)"
+                        (onClear)="onClear()" (uploadHandler)="onSubmit($event)" accept=".png, .pdf , .jpg ,.jpeg" *ngIf="!isUpdateHighlights">
+                      </p-fileUpload> -->
+              </div>
+              <!-- <button type="submit" pButton class="p-button-primary float-right " *ngIf="isUpdateHighlights" (click)="UpdateHighlights()">Update</button> -->
+              <!-- </div> -->
+              <!-- <button type="button" *ngIf="isUpdateHighlights" class="btn btn-primary float-right"
+                (click)="UpdateHighlights()">Update</button> -->
+
+
+
+              <button type="button" pButton class="p-button-primary float-right" *ngIf="isUpdateHighlights"
+                (click)="UpdateHighlights()">Update</button>
+
+
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <p-toast></p-toast>
+  <p-confirmPopup></p-confirmPopup>
+
+</sb-layout-dashboard>

@@ -1,0 +1,44 @@
+﻿ public AtdmsWebContext()
+        {
+
+        }
+        public AtdmsWebContext(DbContextOptions<AtdmsWebContext> options) : base(options)
+        {
+
+        }   
+
+        Scaffold-DbContext "Server=DESKTOP-8S75FRR\SQLEXPRESS;Database=atdms;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir EfModeles -Context AtdmsWebContext -Force
+
+
+
+
+
+
+        ************************************
+"Server=DESKTOP-8S75FRR\SQLEXPRESS;Initial Catalog=atdms;Trusted_Connection=True;
+
+        **************************************
+
+************************Sanjay PC**********************
+Scaffold-DbContext "Server=.;Initial Catalog=atdms;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir EfModeles -Context AtdmsWebContext -Force
+
+Scaffold-DbContext "Server=.;Initial Catalog=atdms;;User Id=sa;Password=root" Microsoft.EntityFrameworkCore.SqlServer -OutputDir EfModeles -Context AtdmsWebContext -Force
+Scaffold-DbContext "Server=103.120.176.15;Initial Catalog=atopdin_atdms;User Id=atopdin_atdms;Password=?Jdbm346" Microsoft.EntityFrameworkCore.SqlServer -OutputDir EfModeles -Context AtdmsWebContext -Force
+
+dev SQL server  
+Scaffold-DbContext "Server=SQL5079.site4now.net;Initial Catalog=db_a7ad44_hradmin;User Id=db_a7ad44_hradmin_admin;Password=Dev@654321" Microsoft.EntityFrameworkCore.SqlServer -OutputDir EfModeles -Context AtdmsWebContext -Force
+
+
+
+***********************Sanjay PC****************************
+
+****************Gauri PC********************
+Scaffold-DbContext "Data Source=LAPTOP-M6VE5JD6\SQLEXPRESS;Initial Catalog=atdms;Integrated Security=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir EfModeles -Context AtdmsWebContext -Force
+
+
+************************************deepak PC*****************************
+ Scaffold-DbContext "Data Source=DESKTOP-EAJCRE1\MYPC;Initial Catalog=atopdin_atdms;Integrated Security=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir EfModeles -Context AtdmsWebContext -Force
+
+
+ **********************************TRUPTI PC*********************************************
+ Scaffold-DbContext "Data Source=Server=DESKTOP-GOTJLGQ\MSSQLSERVER1;Initial Catalog=atopdin_atdms;Integrated Security=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir EfModeles -Context AtdmsWebContext -Force

@@ -1,0 +1,753 @@
+<sb-layout-dashboard>
+    <ng-container *ngIf="(sharedPermission.todos$ | async) as todo">
+        <ng-container *ngIf=" todo && todo[enumModule.Profile]">
+            <p-toast></p-toast>
+            <div class="container mb-4 mt-4">
+                <!--Document Upload-->
+                <div id="accordion">
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <h4 class="text-center" *ngIf="isView">View Details</h4>
+                            <h4 class="text-center" *ngIf="!isView">Update Profile</h4>
+                        </div>
+                        <p-accordion>
+                            <p-tabView>
+                                <p-tabPanel header="Profile">
+                                    <div id="collapse1" class="collapse show">
+                                        <div class="card-body">
+                                            <form [formGroup]="registerForm">
+                                                <p-accordionTab header="Employee Details">
+                                                    <div class="col md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <h4 style="color: blue;">Employee Details</h4>
+                                                                <!-- {{registerForm.value|json}} -->
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for="employeeNo">Employee No</label>
+                                                                    <span style="color:red;size:5px;">*</span>
+                                                                    <input id="employeeNo" type="text" name="employeeNo"
+                                                                        formControlName="employeeNo" autocomplete="off"
+                                                                        class="form-control" readonly>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for="employeeName">Employee Name</label>
+                                                                    <span style="color:red;size:5px;">*</span>
+                                                                    <input id="employeeName" type="text"
+                                                                        name="employeeName"
+                                                                        formControlName="employeeName"
+                                                                        autocomplete="off" class="form-control"
+                                                                        readonly>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for="mobileNo">Mobile No</label>
+                                                                    <span style="color:red;size:5px;">*</span>
+                                                                    <input id="mobileNo" type="text" name="mobileNo"
+                                                                        formControlName="mobileNo" autocomplete="off"
+                                                                        class="form-control" readonly>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for="emailId">Email Id</label>
+                                                                    <span style="color:red;size:5px;">*</span>
+                                                                    <input id="emailId" type="text" name="emailId"
+                                                                        formControlName="emailId" autocomplete="off"
+                                                                        class="form-control" readonly>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </p-accordionTab>
+
+                                                <p-accordionTab header="Personal Details">
+                                                    <div class="col md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <h4 style="color: blue;">Personal Details</h4>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label for="firstName">First Name</label>
+                                                                    <span style="color:red;size:5px;">*</span>
+                                                                    <input id="firstName" type="text" name="firstName"
+                                                                        formControlName="firstName" autocomplete="off"
+                                                                        class="form-control" [readonly]="isView">
+                                                                    <div *ngIf="submitted && f?.firstName?.errors">
+                                                                        <span *ngIf="f?.firstName?.errors?.required"
+                                                                            class="error-msg small">FirstName is
+                                                                            required.</span>
+                                                                        <span *ngIf="f?.firstName?.errors?.max"
+                                                                            class="error-msg small">Max number limit is
+                                                                            50</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label for="middleName">Middle Name</label>
+                                                                    <input id="middleName" type="text" name="middleName"
+                                                                        formControlName="middleName" autocomplete="off"
+                                                                        class="form-control" [readonly]="isView">
+                                                                    <div *ngIf="submitted && f?.middleName?.errors">
+                                                                        <span *ngIf="f?.middleName?.errors?.required"
+                                                                            class="error-msg small">MiddleName is
+                                                                            required.</span>
+                                                                        <span *ngIf="f?.middleName?.errors?.max"
+                                                                            class="error-msg small">Max number limit is
+                                                                            50</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label for="lastName">Last Name</label>
+                                                                    <span style="color:red;size:5px;">*</span>
+                                                                    <input id="lastName" type="text" name="lastName"
+                                                                        formControlName="lastName" autocomplete="off"
+                                                                        class="form-control" [readonly]="isView">
+                                                                    <div *ngIf="submitted && f?.lastName?.errors">
+                                                                        <span *ngIf="f?.lastName?.errors?.required"
+                                                                            class="error-msg small">LastName is
+                                                                            required.</span>
+                                                                        <span *ngIf="f?.lastName?.errors?.max"
+                                                                            class="error-msg small">Max number limit is
+                                                                            50</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label for="gender">Gender</label>
+                                                                    <span style="color:red;size:5px;">*</span>
+                                                                    <select *ngIf="!isView" id="gender"
+                                                                        class="form-control" disabled
+                                                                        formControlName="gender">
+                                                                        <option value="">-Select Gender--</option>
+                                                                        <option value="Male">Male</option>
+                                                                        <option value="Female">Female</option>
+                                                                        <option value="Transgender">Transgender</option>
+                                                                    </select>
+                                                                    <input id="gender" type="text" name="gender"
+                                                                        formControlName="gender" autocomplete="off"
+                                                                        class="form-control" [readonly]="isView"
+                                                                        *ngIf="isView">
+                                                                    <div *ngIf="submitted && f?.gender?.errors">
+                                                                        <span *ngIf="f?.gender?.errors?.required"
+                                                                            class="error-msg small">Gender is
+                                                                            required.</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for="dateOfBirth">Date of Birth</label>
+                                                                    <span style="color:red;size:5px;">*</span>
+                                                                    <input id="dateOfBirth" type="date"
+                                                                        name="dateOfBirth" formControlName="dateOfBirth"
+                                                                        autocomplete="off" class="form-control" 
+                                                                        max="{{currentDate | date:'yyyy-MM-dd'}}"
+                                                                        [readonly]="isView">
+                                                                    <!-- <p-calendar [(ngModel)]="value" ></p-calendar> -->
+                                                                    <!-- <div class="p-field p-col-12 p-md-4"> -->
+                                                                    <!-- <label for="icon">Icon</label> -->
+                                                                    <!-- <p-calendar [(ngModel)]="date3" [showIcon]="true" inputId="icon"></p-calendar> -->
+                                                                    <!-- </div> -->
+                                                                    <div *ngIf="submitted && f?.dateOfBirth?.errors">
+                                                                        <span *ngIf="f?.dateOfBirth?.errors?.required"
+                                                                            class="error-msg small">DateOfBirth is
+                                                                            required.</span>
+                                                                    </div>
+
+
+                                                                </div>
+                                                            </div>
+
+
+
+
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for="mothersName">Mother's Name</label>
+                                                                    <input id="mothersName" type="text"
+                                                                        name="mothersName" formControlName="mothersName"
+                                                                        autocomplete="off" class="form-control"
+                                                                        [readonly]="isView">
+                                                                    <div *ngIf="submitted && f?.mothersName?.errors">
+                                                                        <span *ngIf="f?.mothersName?.errors?.required"
+                                                                            class="error-msg small">MotherName is
+                                                                            required.</span>
+                                                                        <span *ngIf="f?.mothersName?.errors?.max"
+                                                                            class="error-msg small">Max number limit is
+                                                                            50</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for="inputUserName">Marital Status</label>
+                                                                    <span style="color:red;size:5px;">*</span>
+                                                                    <select *ngIf="!isView" name="marital_status"
+                                                                        id="marital_status" class="form-control"
+                                                                        formControlName="maritalStatus">
+                                                                        <option value="" selected>-Select Marital
+                                                                            Status-</option>
+                                                                        <option value="Single">Single</option>
+                                                                        <option value="Married">Married</option>
+                                                                        <option value="Widowed">Widowed</option>
+                                                                        <!-- <option value="Separated">Separated</option> -->
+                                                                        <option value="Divorced">Divorced</option>
+                                                                    </select>
+                                                                    <input id="maritalStatus" type="text"
+                                                                        name="maritalStatus"
+                                                                        formControlName="maritalStatus"
+                                                                        autocomplete="off" class="form-control"
+                                                                        [readonly]="isView" *ngIf="isView">
+                                                                    <div *ngIf="submitted && f?.maritalStatus?.errors">
+                                                                        <span *ngIf="f?.maritalStatus?.errors?.required"
+                                                                            class="error-msg small">MaritalStatus is
+                                                                            required.</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4" *ngIf="fv?.maritalStatus != 'Single' && fv?.maritalStatus != 'Widowed' && fv?.maritalStatus != 'Divorced'">
+                                                                <div class="form-group">
+                                                                    <label for="spouseName">Spouse Name</label>
+                                                                    <input id="spouseName" type="text" name="spouseName"
+                                                                        formControlName="spouseName" autocomplete="off"
+                                                                        class="form-control" [readonly]="isView">
+                                                                    <div *ngIf="submitted && f?.spouseName?.errors">
+                                                                        <span *ngIf="f?.spouseName?.errors?.required"
+                                                                            class="error-msg small">SpouseName is
+                                                                            required.</span>
+                                                                        <span *ngIf="f?.spouseName?.errors?.max"
+                                                                            class="error-msg small">Max number limit is
+                                                                            50</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4" *ngIf="fv?.maritalStatus != 'Single'  && fv?.maritalStatus != 'Widowed' ">
+                                                                <div class="form-group">
+                                                                    <label for="childName1">1st Child Name</label>
+                                                                    <input id="childName1" type="text" name="childName1"
+                                                                        formControlName="childName1" autocomplete="off"
+                                                                        class="form-control" [readonly]="isView">
+                                                                    <div *ngIf="submitted && f?.childName1?.errors">
+                                                                        <span *ngIf="f?.childName1?.errors?.required"
+                                                                            class="error-msg small">ChildName1 is
+                                                                            required.</span>
+                                                                        <span *ngIf="f?.childName1?.errors?.max"
+                                                                            class="error-msg small">Max number limit is
+                                                                            50</span>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4" *ngIf="fv?.maritalStatus != 'Single'  && fv?.maritalStatus != 'Widowed'">
+                                                                <div class="form-group">
+                                                                    <label for="childName2">2nd Child Name</label>
+                                                                    <input id="childName2" type="text" name="childName2"
+                                                                        formControlName="childName2" autocomplete="off"
+                                                                        class="form-control" [readonly]="isView">
+                                                                    <div *ngIf="submitted && f?.childName2?.errors">
+                                                                        <span *ngIf="f?.childName2?.errors?.required"
+                                                                            class="error-msg small">ChildName2 is
+                                                                            required.</span>
+                                                                        <span *ngIf="f?.childName2?.errors?.max"
+                                                                            class="error-msg small">Max number limit is
+                                                                            50</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="emergencyNo">Emergency No</label><span
+                                                                style="color:red;size:5px;">*</span>
+                                                            <input id="emergencyNo" type="text" name="emergencyNo"
+                                                                formControlName="emergencyNo" autocomplete="off"
+                                                                class="form-control" [readonly]="isView">
+                                                            <!-- <p-calendar [(ngModel)]="value" ></p-calendar> -->
+                                                            <!-- <div class="p-field p-col-12 p-md-4"> -->
+                                                            <!-- <label for="icon">Icon</label> -->
+                                                            <!-- <p-calendar [(ngModel)]="date3" [showIcon]="true" inputId="icon"></p-calendar> -->
+                                                            <!-- </div> -->
+                                                            <div *ngIf="submitted && f?.emergencyNo?.errors">
+                                                                <span *ngIf="f?.emergencyNo?.errors?.required"
+                                                                    class="error-msg small">Emergency No is
+                                                                    required.</span>
+                                                            </div>
+
+
+                                                        </div>
+                                                        <div class="col-md-12 text-center" *ngIf="errorExists">
+                                                            <div class="error-msg small">{{errorExists}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </p-accordionTab>
+                    <p-accordionTab header="Address Details">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h5 style="color: blue;">Current Address</h5>
+                                            <div class="form-group">
+                                                <label for="caddressLine1">Address Line 1</label><span
+                                                                        style="color:red;size:5px;">*</span>
+                                                                    <input id="caddressLine1" type="text" name="caddressLine1"
+                                                                        formControlName="caddressLine1" autocomplete="off"
+                                                                        class="form-control" [readonly]="isView">
+                                                                    <!-- <div *ngIf="submitted && f?.caddressLine1?.errors">
+                                                                            <span *ngIf="f?.caddressLine1?.errors?.required" class="error-msg small">Current addressLine is required.</span>
+                                                                        </div> -->
+                                                                    <div *ngIf="submitted && f?.caddressLine1?.errors">
+                                                                        <span *ngIf="f?.caddressLine1?.errors?.required"
+                                                                            class="error-msg small">Current addressLine1 is
+                                                                            required.</span>
+                                                                        <span *ngIf="f?.caddressLine1?.errors?.max"
+                                                                            class="error-msg small">Max number limit is
+                                                                            50</span>
+                                                                    </div>
+                                            </div>
+                                        </div>
+
+
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                <label for="caddressLine2">Address Line 2</label>
+                                                <input id="caddressLine2" type="text" name="caddressLine2"
+                                                formControlName="caddressLine2" autocomplete="off"
+                                                class="form-control" [readonly]="isView">
+                                                <div *ngIf="submitted && f?.caddressLine2?.errors">
+                                                <span *ngIf="f?.caddressLine2?.errors?.required" class="error-msg small">Current addressLine2 is
+                                                                            required.</span>
+                                                <span *ngIf="f?.caddressLine2?.errors?.max" class="error-msg small">Max number limit is
+                                                                            50</span>
+                                                </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="ccity">City</label><span
+                                                    style="color:red;size:5px;">*</span>
+                                                <input id="ccity" type="text" name="ccity"
+                                                    formControlName="ccity" autocomplete="off"
+                                                    class="form-control" [readonly]="isView">
+                                                <!-- <div *ngIf="submitted && f?.ccity?.errors">
+                                                        <span *ngIf="f?.ccity?.errors?.required" class="error-msg small">Current city is required.</span>
+                                                    </div> -->
+                                                <div *ngIf="submitted && f?.ccity?.errors">
+                                                    <span *ngIf="f?.ccity?.errors?.required"
+                                                        class="error-msg small">Current city is
+                                                        required.</span>
+                                                    <span *ngIf="f?.ccity?.errors?.max"
+                                                        class="error-msg small">Max number limit is
+                                                        50</span>
+                                                </div>
+                                               
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="cpincode">Pin Code</label><span
+                                                                        style="color:red;size:5px;">*</span>
+                                                                    <input type="text" maxlength="6" formControlName="cpincode"
+                                                                        autocomplete="off" class="form-control"
+                                                                        [readonly]="isView" (keypress)="numberOnly($event)">
+                                                                    <div *ngIf="submitted && f?.cpincode?.errors">
+                                                                        <span *ngIf="f?.cpincode?.errors?.required"
+                                                                            class="error-msg small">Pincode is required.</span>
+                                                                        <span *ngIf="f?.cpincode?.errors?.minlength"
+                                                                            class="error-msg small">Min number limit is 6</span>
+                                                                    </div>
+                                                </div>
+                                            </div>
+
+                                             <div class="col-md-12">
+                                                <div class="form-group" >
+                                                    <label for="cpstate">State</label><span
+                                                                        style="color:red;size:5px;">*</span>
+                                                                    <!-- <input id="cpstate" type="text" name="cpstate"
+                                                                        formControlName="cpstate" autocomplete="off"
+                                                                        class="form-control" [readonly]="isView"> -->
+                                                                   <!-- <select autocomplete="off" class="form-control " formControlName="cpstate" id="cpstate"
+                                                                    type="text" placeholder="Select a State" > -->
+                                                                    <select  name="cpstate" id="cpstate" *ngIf="! isView" 
+                                                                    class="form-control" formControlName="cpstate">
+                                                                        <option value="" selected>-Select State-</option>
+                                                                        <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                                                        <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands	</option>
+                                                                        <option value="Arunachal Pradesh">Arunachal Pradesh	</option>
+                                                                        
+                                                                        <option value="Assam">Assam</option>
+                                                                        <option value="Bihar">Bihar</option>
+                                                                        <option value="Chandigarh">Chandigarh</option>
+                                                                        <option value="Chhattisgarh">Chhattisgarh</option>
+                                                                        <option value="Delhi">Delhi</option>
+                                                                        <option value="Goa">Goa</option>
+                                                                        <option value="Gujarat">Gujarat</option>
+                                                                        <option value="Haryana">Haryana</option>
+                                                                        <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                                                        <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                                                                        <option value="Jharkhand">Jharkhand	</option>
+                                                                        <option value="Karnataka">Karnataka</option>
+                                                                        <option value="Kerala">Kerala</option>
+                                                                        <option value="Lakshadweep">Lakshadweep</option>
+                                                                        <option value="Ladakh">Ladakh</option>
+                                                                        <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                                                        <option value="Maharashtra">Maharashtra</option>
+                                                                        <option value="Manipur">Manipur</option>
+                                                                        <option value="Meghalaya">Meghalaya</option>
+                                                                        <option value="Mizoram">Mizoram</option>
+                                                                        <option value="Nagaland">Nagaland</option>
+                                                                        <option value="Odisha">Odisha</option>
+                                                                        <option value="Punjab">Punjab</option>
+                                                                        <option value="Puducherry">Puducherry</option>
+                                                                        <option value="Rajasthan">Rajasthan</option>
+                                                                        <option value="Sikkim">Sikkim</option>
+                                                                        <option value="Tamil Nadu">Tamil Nadu</option>
+                                                                        <option value="Telangana">Telangana</option>
+                                                                        <option value="Tripura">Tripura</option>
+                                                                        <option value="Uttar Pradesh">Uttar Pradesh	</option>
+                                                                        <option value="Uttarakhand">Uttarakhand	</option>
+                                                                        <option value="West Bengal">West Bengal</option>
+                                                                      </select>
+                                                                      <input id="cpstate" type="text" name="cpstate"
+                                                                      formControlName="cpstate" autocomplete="off" class="form-control"
+                                                                      [readonly]="isView" *ngIf="isView">
+                                                                    <div *ngIf="submitted && f?.cpstate?.errors">
+                                                                        <span *ngIf="f?.cpstate?.errors?.required"
+                                                                            class="error-msg small">Current state is
+                                                                            required.</span>
+                                                                        <!-- <span *ngIf="f?.cpstate?.errors?.max"
+                                                                            class="error-msg small">Max number limit is
+                                                                            50</span> -->
+                                                                    </div>
+                                                                </div>
+                                            </div>     
+                                            
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <p-checkbox name="groupname" formControlName="isSameAddress"
+                                                        (onChange)="onChangeSameAddress()" binary="true"
+                                                        label="Permanent address same as current address  ">
+
+                                                    </p-checkbox>
+                                                </div>
+                                            </div>
+
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h5 style="color: blue;">Permanent Address</h5>
+                                            <div class="form-group">
+                                                <label for="paddressLine1">Address Line 1</label>
+                                                <span style="color:red;size:5px;">*</span>
+                                                <input id="paddressLine1" type="text" name="paddressLine1"
+                                                                        formControlName="paddressLine1" autocomplete="off"
+                                                                        class="form-control" [readonly]="isView">
+                                                                    <!-- <div *ngIf="submitted && f?.paddressLine1?.errors">
+                                                                            <span *ngIf="f?.paddressLine1?.errors?.required" class="error-msg small">Perment Address is required.</span>
+                                                                        </div> -->
+                                                                    <div *ngIf="submitted && f?.paddressLine1?.errors">
+                                                                        <span *ngIf="f?.paddressLine1?.errors?.required"
+                                                                            class="error-msg small">Permanent address line is
+                                                                            required.</span>
+                                                                        <span *ngIf="f?.paddressLine1?.errors?.max"
+                                                                            class="error-msg small">Max number limit is
+                                                                            500</span>
+                                                                    </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="paddressLine2">Address Line 2</label>
+                                                                    <input id="paddressLine2" type="text" name="paddressLine2"
+                                                                        formControlName="paddressLine2" autocomplete="off"
+                                                                        class="form-control" [readonly]="isView">
+                                                                    <div *ngIf="submitted && f?.paddressLine2?.errors">
+                                                                        <span *ngIf="f?.paddressLine2?.errors?.required"
+                                                                            class="error-msg small">Permanent address line2 is
+                                                                            required.</span>
+                                                                        <span *ngIf="f?.paddressLine2?.errors?.max"
+                                                                            class="error-msg small">Max number limit is
+                                                                            500</span>
+                                                                    </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="pcity">City</label>
+                                                <span style="color:red;size:5px;">*</span>
+                                                <input id="pcity" type="text" name="pcity"
+                                                                        formControlName="pcity" autocomplete="off"
+                                                                        class="form-control" [readonly]="isView">
+                                                                    <!-- <div *ngIf="submitted && f?.pcity?.errors">
+                                                                            <span *ngIf="f?.pcity?.errors?.required" class="error-msg small">Perment City is required.</span>
+                                                                        </div> -->
+                                                                    <div *ngIf="submitted && f?.pcity?.errors">
+                                                                        <span *ngIf="f?.pcity?.errors?.required"
+                                                                            class="error-msg small">Permanent city is
+                                                                            required.</span>
+                                                                        <span *ngIf="f?.pcity?.errors?.max"
+                                                                            class="error-msg small">Max number limit is
+                                                                            50</span>
+                                                                    </div>
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="mb-1" for="pincode">Pin code</label><span
+                                                style="color:red;size:5px;">*</span>
+                                            
+                                            <input type="text" maxlength="6" formControlName="ppincode"
+                                                autocomplete="off" class="form-control"
+                                                [readonly]="isView" (keypress)="numberOnly($event)">
+
+                                            
+                                            <div *ngIf="submitted && f?.ppincode?.errors">
+                                                <span *ngIf="f?.ppincode?.errors?.required"
+                                                    class="error-msg small">Pincode is required.</span>
+                                                <span *ngIf="f?.ppincode?.errors?.minlength"
+                                                    class="error-msg small">Min number limit is 6</span>
+                                            </div>
+                                            </div>                
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="pstate">State</label>
+                                                <span
+                                                                        style="color:red;size:5px;">*</span>
+                                                                    <!-- <input id="pstate" type="text" name="pstate"
+                                                                        formControlName="pstate" autocomplete="off"
+                                                                        class="form-control" [readonly]="isView"> -->
+                                                                        <select  name="pstate" id="pstate" *ngIf="! isView"
+                                                                    class="form-control" formControlName="pstate">
+                                                                        <option value="" selected>-Select State-</option>
+                                                                        <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                                                        <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands	</option>
+                                                                        <option value="Arunachal Pradesh">Arunachal Pradesh	</option>
+                                                                        <option value="Assam">Assam</option>
+                                                                        <option value="Bihar">Bihar</option>
+                                                                        <option value="Chandigarh">Chandigarh</option>
+                                                                        <option value="Chhattisgarh">Chhattisgarh</option>
+                                                                        <option value="Delhi">Delhi</option>
+                                                                        <option value="Goa">Goa</option>
+                                                                        <option value="Gujarat">Gujarat</option>
+                                                                        <option value="Haryana">Haryana</option>
+                                                                        <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                                                        <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                                                                        <option value="Jharkhand">Jharkhand	</option>
+                                                                        <option value="Karnataka">Karnataka</option>
+                                                                        <option value="Kerala">Kerala</option>
+                                                                        <option value="Lakshadweep">Lakshadweep</option>
+                                                                        <option value="Ladakh">Ladakh</option>
+                                                                        <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                                                        <option value="Maharashtra">Maharashtra</option>
+                                                                        <option value="Manipur">Manipur</option>
+                                                                        <option value="Meghalaya">Meghalaya</option>
+                                                                        <option value="Mizoram">Mizoram</option>
+                                                                        <option value="Nagaland">Nagaland</option>
+                                                                        <option value="Odisha">Odisha</option>
+                                                                        <option value="Punjab">Punjab</option>
+                                                                        <option value="Puducherry">Puducherry</option>
+                                                                        <option value="Rajasthan">Rajasthan</option>
+                                                                        <option value="Sikkim">Sikkim</option>
+                                                                        <option value="Tamil Nadu">Tamil Nadu</option>
+                                                                        <option value="Telangana">Telangana</option>
+                                                                        <option value="Tripura">Tripura</option>
+                                                                        <option value="Uttar Pradesh">Uttar Pradesh	</option>
+                                                                        <option value="Uttarakhand">Uttarakhand	</option>
+                                                                        <option value="West Bengal">West Bengal</option>
+                                                                      </select>
+        
+                                                                      <input id="pstate" type="text" name="pstate"
+                                                                      formControlName="pstate" autocomplete="off" class="form-control"
+                                                                      [readonly]="isView" *ngIf="isView">
+                                                                      
+                                                                    <!-- <div *ngIf="submitted && f?.pstate?.errors">
+                                                                            <span *ngIf="f?.pstate?.errors?.required" class="error-msg small">Perment State is required.</span>
+                                                                        </div> -->
+                                                                    <div *ngIf="submitted && f?.pstate?.errors">
+                                                                        <span *ngIf="f?.pstate?.errors?.required"
+                                                                            class="error-msg small">Permanent state is
+                                                                            required.</span>
+                                                                        <!-- <span *ngIf="f?.pstate?.errors?.max"
+                                                                            class="error-msg small">Max number limit is
+                                                                            50</span> -->
+                                                                    </div>
+        
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </div>
+
+                        
+                        
+                    </p-accordionTab>
+
+                    <p-accordionTab header="Professional Details">
+                        <div class="col-md-12">
+                            <h4 style="color: blue;"> Professional Details</h4>
+                        <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="joiningDate">Joining Date</label>
+                                <span style="color:red;size:5px;">*</span>
+                                <input id="joiningDate" type="date" name="joiningDate" disabled formControlName="joiningDate" autocomplete="off" class="form-control" [readonly]="isView">
+                                <div *ngIf="submitted && f?.joiningDate?.errors">
+                                    <span *ngIf="f?.joiningDate?.errors?.required" class="error-msg small">JoiningDate is required.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="division">Division</label>
+                                <input id="division" type="text" name="division" disabled formControlName="division" autocomplete="off" class="form-control" [readonly]="isView">
+                                <div *ngIf="submitted && f?.division?.errors">
+                                    <span *ngIf="f?.division?.errors?.required" class="error-msg small">Division is required.</span>
+                                    <span *ngIf="f?.division?.errors?.max" class="error-msg small">Max number limit is 50</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                            <label for="department">Department</label>
+                            <span style="color:red;size:5px;">*</span>
+                            <input id="department" type="text" name="department" formControlName="department" autocomplete="off" class="form-control" [readonly]="isView" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">  
+                            <div class="col-md-4">
+                            <div class="form-group">
+                            <label for="inputUserName">Employee Status</label>
+                            <span style="color:red;size:5px;">*</span>
+                            <select *ngIf="!isView" name="employeeStatus" id="employeeStatus" autocomplete="off" readonly disabled class="form-control" formControlName="employeeStatus">
+                                <option value="" selected>-Select Employee Status-</option>
+                                <option value="Full Time">Full Time</option>
+                                <option value="Part Time">Part Time</option>
+                            </select>
+                            <input id="employeeStatus" type="text" name="name" formControlName="employeeStatus" autocomplete="off" class="form-control" [readonly]="isView" *ngIf="isView">
+                            <div *ngIf="submitted && f?.employeeStatus?.errors">
+                            <span *ngIf="f?.employeeStatus?.errors?.required" class="error-msg small">Employee status is required.</span>
+                            </div>
+                            </div>
+                            </div>
+                            
+                            <div class="col-md-4">
+                            <div class="form-group">
+                            <label for="roleName"> Role Type</label>
+                            <span style="color:red;size:5px;">*</span>
+                            <input id="roleName" type="text" name="roleName" formControlName="roleName" autocomplete="off" class="form-control" readonly>
+                            </div>
+                            
+                            </div>
+                    </div>
+                </div>
+                    </p-accordionTab>
+                                                
+
+                                                <button (click)="updateRecord($event)"
+                                                    *ngIf="!isView && todo[enumModule.Profile][enumPer.EDIT]"
+                                                    class="btn btn-primary float-right mb-2">Update</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                
+                                </p-tabPanel>
+                                <p-tabPanel header="Document" *ngIf="isView">
+                                    <div>
+                                        <div class="row justify-content-between mb-3">
+                                            <div class="col-sm-4">
+                                                <h4>Document List</h4>
+                                                <!-- {{employeeDetails|json}} -->
+                                            </div>
+                                        </div>
+                                        <p-table [columns]="cols" [value]="employeeDetails?.documentsList"
+                                            styleClass="p-datatable-responsive-demo"
+                                            [rowsPerPageOptions]="rowsPerPageOptions" [paginator]="true" [rows]="5"
+                                            styleClass="p-datatable-sm" class="table mt-2 table-striped">
+                                            <ng-template pTemplate="header" let-columns>
+                                                <tr>
+                                                    <th *ngFor="let col of columns" class="th-bgcolour">
+                                                        {{col.header}}
+                                                    </th>
+                                                    
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="body" let-doc>
+                                                <tr>
+                                                    <td>{{doc.documentType.documentName}}</td>
+                                                    <td>{{doc.document.documentName}}</td>
+                                                    <td>{{doc.document.universityName}}</td>
+                                                    <td style="text-align: center;">{{doc.document.percentage}}</td>
+                                                    <td>{{doc.document.passYear}}</td>
+                                                    <td>{{doc.document.createdAt| date :'dd-MM-yyyy'}}</td>
+                                                    <td>
+                                                        <i (click)="onView(doc)" class="pi pi-eye icon icon-view"
+                                                            pTooltip="View" tooltipPosition="top"></i>
+                                                        <a (click)="download(doc)"><i
+                                                                class="pi pi-download icon icon-download"
+                                                                pTooltip="Download" tooltipPosition="top"></i></a>
+                                                    </td>
+                                                </tr>
+
+
+                                            </ng-template>
+                                        </p-table>
+                                    </div>
+                                    <p-dialog header="" [(visible)]="display">
+                                        <div *ngIf="selectedDocument && fileType!=='pdf'">
+                                            <img width="700" height="500" [src]="geturl()" alt="">
+                                        </div>
+                                        <div *ngIf="selectedDocument && fileType==='pdf'">
+                                            <embed
+                                                [src]="getSefUrl(apiUrl+selectedDocument['document']['documentPath'])"
+                                                width="700" height="500">
+                                        </div>
+                                    </p-dialog>
+                                </p-tabPanel>
+                            </p-tabView>
+                        </p-accordion>
+
+
+                    </div>
+                </div>
+            </div>
+            <p-confirmPopup></p-confirmPopup>
+
+
+        </ng-container>
+    </ng-container>
+</sb-layout-dashboard>

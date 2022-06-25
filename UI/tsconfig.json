@@ -1,0 +1,58 @@
+{
+    "angularCompilerOptions": {
+        "enableIvy": false,
+        "fullTemplateTypeCheck": false,
+        "preserveWhitespaces": false,
+        "strictInjectionParameters": true
+    },
+    "compileOnSave": false,
+    "compilerOptions": {
+        "baseUrl": "src",
+        "declaration": false,
+        "allowSyntheticDefaultImports": true,
+        "downlevelIteration": true,
+        "emitDecoratorMetadata": true,
+        "esModuleInterop": true,
+        "experimentalDecorators": true,
+        "importHelpers": true,
+        "lib": [
+            "es2018",
+            "dom"
+        ],
+        "module": "esnext",
+        "moduleResolution": "node",
+        "noImplicitAny": true,
+       
+        "outDir": "./dist/out-tsc",
+        "paths": {
+            "@app/*": [
+                "app/*"
+            ],
+            "@common/*": [
+                "app/modules/app-common/*"
+            ],
+            "@modules/*": [
+                "app/modules/*"
+            ],            
+            "@testing/*": [
+                "testing/*"
+            ],
+            "@shared/*": [
+                "app/modules/shared/*"
+            ],
+            "exceljs": [
+                "node_modules/exceljs/dist/exceljs.min"
+              ]
+            
+        },
+        "resolveJsonModule": true,
+        "sourceMap": true,
+        "strict": true,
+        "strictNullChecks": false,
+        "target": "es2015",
+        "typeRoots": [
+            "node_modules/@types",
+            "src/typings"
+        ]
+    }
+}

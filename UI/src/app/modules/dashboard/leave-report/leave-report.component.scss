@@ -1,0 +1,15 @@
+:host ::ng-deep {
+    .th-bgcolour{
+        background-color:#24a0ed !important;color: #fff !important;
+        border: 5px solid wheat;
+        padding: 5px;
+         }
+         p-table, tr, td {
+            border: 2px solid #fff !important;
+            padding: 5px;
+          }
+          p-table {
+        
+            border-spacing: 12px;
+          }
+ }

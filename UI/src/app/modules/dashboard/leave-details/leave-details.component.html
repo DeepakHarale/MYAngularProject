@@ -1,0 +1,213 @@
+<sb-layout-dashboard>
+    <ng-container *ngIf="(sharedPermission.todos$ | async) as todo">
+    <ng-container *ngIf=" todo && todo[enumModule.LeaveApply]" >
+        
+    <ng-container *ngIf="addButton">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <div class="card shadow-lg border-0 rounded-lg">
+                    <form [formGroup]="leaveDetailForm">
+                                <div class=" card-header">
+                                    <h4 class="text-center">Apply Leave </h4>
+                                </div>
+                                <div class="row mt-5 mb-2">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="leaves">Leave Type<span style="color:red;size:5px;">*</span></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                            <select name="leaveType" id="leaveType" class="form-control" formControlName="leaveTypeId" 
+                                            (change)="onLeaveTypeChange($event.target.value)" >
+                                            <option value="" selected>--Select Leave Type--</option>
+                                            <option *ngFor="let item of leaveTypesList" [value]="item.leaveId" >{{item.leaveName}}</option>
+                                            <label></label>
+                                            </select>
+                                    
+                                            <div *ngIf="submitted && ld.leaveName?.errors?.required">
+                                            <span *ngIf="ld.leaveName?.errors?.required" class="error-msg small">Leave Type is required.</span>
+                                        </div>
+                                    </div>
+                                <div class="col-md-5" ><label>
+                                    <div *ngIf="this.LWS!= 3">
+                                        <div *ngIf="this.LWS!= 6">
+                                        <span style="color:green;size:5px;" *ngIf="isShowLeaveCount ">Your leave balance is = {{selectedCount}} </span>
+                                    </div></div></label>
+                                    
+                                    </div>
+                                </div>
+
+                                <div class="row my-2">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-2">
+                                        <div class="form-group"><label for="fromDate">From Date</label><span style="color:red;size:5px;">*</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input id="fromDate" type="date" name="fromDate"                                            
+                                            (change)="onChangeCount('f')" class="form-control" formControlName="fromDate"  
+                                            min="{{this.currentDate | date:'yyyy-MM-dd'}}"  max="{{endOfCalenderYear | date:'yyyy-MM-dd'}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <select name="leaveTypeFrom" id="leaveTypeFrom" class="form-control"
+                                                formControlName="leaveTypeFrom"(change)="onChangeCount('f')">
+                                                <option [value]="'Full Day'">Full Day</option>
+                                                <option [value]="'Half Day'">Half Day</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-md-3" *ngIf="formValue.leaveTypeFromDate=='HalfDayFromDate'">
+                                     <div class="form-group">
+                                       <select name="FirstSecondHalfFromDate" id="FirstSecondHalfFromDate" class="form-control" formControlName="FirstSecondHalfFromDate">--Select--
+                                            <option value="" selected>--Select--</option>
+                                            <option value="firstHalfFromDate">First Half</option>
+                                            <option value="secondHalfFromDate">Second Half</option>
+                                      </select>
+                                     </div>
+                                    </div> -->
+                                    <div class="col-md-2"></div>
+                                </div>
+
+                                <div class="row my-2">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-2">
+                                        <div class="form-group"><label for="toDate">To Date</label>
+                                            <span style="color:red;size:5px;">*</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input id="toDate" type="date" name="toDate" [min]=""
+                                                (change)="onChangeCount('t')" formControlName="toDate"class="form-control"
+                                                min="{{formValue.fromDate | date:'yyyy-MM-dd'}}"  max="{{endOfCalenderYear | date:'yyyy-MM-dd'}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" *ngIf="formValue.toDate !=formValue.fromDate">
+                                        <div>
+                                            <select name="leaveTypeToDate" id="leaveTypeTo" class="form-control"
+                                                formControlName="leaveTypeTo" (change)="onChangeCount('t')">
+                                                <option [value]="'Full Day'">Full Day</option>
+                                                <option [value]="'Half Day'">Half Day</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-md-3" *ngIf="formValue.leaveTypeToDate=='HalfDayToDate'">
+                                <div>
+                                <select name="FirstSecondHalfToDate" id="FirstSecondHalfToDate" class="form-control"
+                                           formControlName="FirstSecondHalfToDate">
+                                       <option value="" selected>--Select--</option>
+                                       <option value="firstHalfToDate">First Half</option>
+                                         <option value="secondHalfToDate">Second Half</option>
+                                 </select>
+                                 </div>
+                                 </div> -->
+                                <div class="col-md-2"></div>
+                                </div>
+
+                                <div class="row  my-2">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label for="totalDays">Total No. Of Days</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <input id="totalDays" type="text" name="totalDays" class="form-control"
+                                                formControlName="totalDays" readonly >
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row  my-4 mb-2">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-2"><label>Leave Description</label><span style="color:red;size:5px;">*</span></div>
+
+                                    <div class="col-8">
+                                         <textarea id="leaveDescription" type="textarea" name="leaveDescription"
+                                                formControlName="leaveDescription" class="form-control" maxlength="200"></textarea>
+                                    </div>
+                                  
+                                        <div class="col-md-2"></div>
+                                </div>
+
+                                <div class="row mt-2 mb-5 mx-2 text-center">
+                                    <div class="col-md-12">
+                                        
+                                        <button type="button" pButton class="p-button-warning float-left mx-3" (click)="this.addButton=false">Back To
+                                            List</button>
+                                       
+                                            <button type="submit" pButton  class="p-button-success float-right mr-3"
+                                            (click)="LeaveDetailsSubmit()" *ngIf="!isUpdateLeave"
+                                            [disabled]="!leaveDetailForm.valid" >Save</button>
+
+                                            <button type="submit" pButton class="p-button-success float-right mr-3"(click)="editLeave()" 
+                                            *ngIf="isUpdateLeave">Update</button>
+
+                                            <button type="button" pButton class="p-button-secondary float-right mr-3 "
+                                            (click)="resetForm()">Cancel</button>
+                                    </div>
+                                </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </ng-container>
+    <ng-container *ngIf="!addButton">
+        <div class="row justify-content-between mb-3 mt-4">
+            <div class="col-sm-4">
+                <h4>Leave List({{leaveDetailsList?.length ||'0'}})</h4>
+            </div>
+            <div *ngIf="todo[enumModule.LeaveApply][enumPer.ADD]" class="col-sm-4 d-flex flex-row-reverse">
+                <button pButton type="button" icon="pi pi-plus-circle" label="Apply Leave"class="p-button-secondary p-button-sm" 
+                    (click)="onAddLeave()"></button>
+            </div>
+        </div>
+        
+        <p-table [columns]="[]" [value]="leaveDetailsList" styleClass="p-datatable-responsive-demo" class="table mt-2 table-striped"
+            [rowsPerPageOptions]="rowsPerPageOptions" [paginator]="true" [rows]="10" styleClass="p-datatable-sm">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th scope="col" class="th-bgcolour">Leave Type</th>
+                    <th class="th-bgcolour">From Date</th>
+                    <th class="th-bgcolour">To Date</th>
+                     <th class="th-bgcolour">  No. Of Days</th> 
+                    <th scope="col"colspan="2" class="th-bgcolour">Leave Description</th>
+                    <th class="th-bgcolour"> Leave Status </th> 
+                    <th class="th-bgcolour ">Action</th>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item>
+                <tr>
+                    <td >{{item.leaveType.leaveName}}</td>
+                    <td>{{item.leave.fromDate | date:'dd-MM-YYYY'}}</td>
+                    <td>{{item.leave.toDate| date:'dd-MM-YYYY'}}</td>
+                    <td style="text-align: center;"> {{totalCountDisplay(item)}} </td>
+                    <td colspan="2" style="width: 200px;word-break: break-all;padding-bottom: 1.5rem;">
+                        <app-read-more  [text]="item.leave.leaveDescription" maxLength="10" style="cursor: pointer"></app-read-more></td>
+                    <td > {{item.leave.leaveStatus}} </td>
+                    <td >
+                        <i (click)="UpdateLeave(item)" class="fa fa-edit" style="font-size:20px" pTooltip="Edit/View" tooltipPosition="top" 
+                        [ngStyle]="{'pointer-events':item.leave.leaveStatus != 'PENDING' ? 'none':'',color:item.leave.leaveStatus != 'PENDING' ?'gray':''}" *ngIf="todo[enumModule.LeaveApply][enumPer.EDIT]"></i>
+                   &nbsp;
+                        <i (click)="onDeleted($event,item)" *ngIf="todo[enumModule.LeaveApply][enumPer.DELETE]"
+                        class="pi pi-times-circle icon icon-delete" pTooltip="Delete" tooltipPosition="top"></i>
+                    </td>
+
+                  
+                </tr>
+            </ng-template>
+        
+        </p-table>
+    </ng-container>
+    <p-confirmPopup></p-confirmPopup>
+    <p-toast></p-toast>
+</ng-container>
+</ng-container>
+</sb-layout-dashboard>

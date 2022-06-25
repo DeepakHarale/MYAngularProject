@@ -1,0 +1,262 @@
+<sb-layout-dashboard>
+
+  <!-- <div class="card">
+    <h5>Leave Report({{GetLeave.length}})</h5>
+
+    <p-table #todoTable [value]="GetLeave" [scrollable]="true" 
+    [globalFilterFields]="['employee.employeeNo','employee.employeeName','leave.fromDate', 'leave.toDate','leave.leaveTypeTo',
+    'leave.leaveDescription', 'leave.leaveBalance','leaveType.leaveName', 'leaveType.assignedDays']"
+    scrollHeight="400px" scrollDirection="both">
+        <ng-template pTemplate="header">
+
+
+          <div class="p-d-flex" style="margin-bottom: 20px;">
+
+            
+            <span class="p-input-icon-right p-ml-auto " 
+            style="padding-left: 1000px;"
+             >
+              <i class="pi pi-search"></i>
+               <input pInputText type="text" (input)="todoTable.filterGlobal($event.target.value, 'contains')"
+                placeholder="Search keyword" /> 
+                <input pInputText type="text" name="employeeName" class="form-control" [(ngModel)]="employeeName"
+                (ngModelChange)="Search()" placeholder="Search keyword" >
+            </span>
+            <button type="button" class="btn btn-success" pTooltip="Download all reports" style="text-align: end;" (click)="exportexcel()">ExportToExcel</button>
+
+          </div>
+            <tr>
+                <th class="th-bgcolour">Employee ID</th>
+                <th class="th-bgcolour" colspan="1">Employee Name</th>
+                <th class="th-bgcolour" colspan="1">Leave From Date</th>
+                <th class="th-bgcolour">Leave To Date</th>
+                <th class="th-bgcolour" colspan="1">Leave Description</th>
+                <th class="th-bgcolour">Reamains monthly Balance</th>
+                <th class="th-bgcolour">Leave Type</th>
+                <th class="th-bgcolour">Total Days</th>
+
+  
+
+              
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+            <tr>
+                <td colspan="2">{{item.employee.employeeNo}}</td>
+                <td></td>
+                <td colspan="3">{{item.employee.employeeName}}</td>
+                
+                <td colspan="3">{{item.leave.fromDate | date:'MMM d, y'}} 
+                  ({{item.leave.leaveTypeFrom}})
+                </td>
+                <td  colspan="3">{{item.leave.toDate | date:'MMM d, y' }}
+                  ({{item.leave.leaveTypeTo}})
+                 </td>
+                
+                <td colspan="2">{{item.leave.leaveDescription}}</td>
+                <td colspan="2"></td>
+                <td colspan="2">{{item.leave.leaveBalance}}</td>
+                <td colspan="3">{{item.leaveType.leaveName}}</td>
+                <td colspan="2">{{item.leaveType.assignedDays}}</td>
+                
+                <td>
+                <i class="pi pi-file-excel" pTooltip="Download" style="font-size:36px; color: green; margin-top: 2px; cursor: pointer;" (click)="ExportDataByEmployee(item)"></i>
+
+                </td>
+
+
+
+          
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft" let-providerList>
+          <span>
+                  
+            {{'Total no. of records ='}}  {{providerList.totalRecords}}  </span>
+        </ng-template>
+    </p-table>
+
+    
+</div> -->
+
+ <!-- <div class="container">
+    <input type="text" name="employeeName" class="form-control" [(ngModel)]="employeeName"
+    (ngModelChange)="Search()" placeholder="Search keyword" >
+      <table>
+        <thead>
+        <tr>
+          <th>Employee ID</th>
+          <th>Employee Name</th>
+          <th>Leave From Date</th>
+          <th>Leave To Date</th>
+          <th>Leave Description</th>
+          <th>Reamains monthly Balance</th>
+          <th>Leave Type</th>
+          <th>Total Days</th>
+
+        </tr>
+      </thead>
+      <tbody>
+
+     
+        <tr *ngFor="let item of getleave">
+          <td >{{item.employee.employeeNo}}</td>
+         
+          <td >{{item.employee.employeeName}}</td>
+          
+          <td >{{item.leave.fromDate | date:'MMM d, y'}} 
+            ({{item.leave.leaveTypeFrom}})
+          </td>
+          <td >{{item.leave.toDate | date:'MMM d, y' }}
+            ({{item.leave.leaveTypeTo}})
+           </td>
+          
+          <td >{{item.leave.leaveDescription}}</td>
+    
+          <td >{{item.leave.leaveBalance}}</td>
+          <td >{{item.leaveType.leaveName}}</td>
+          <td >{{item.leaveType.assignedDays}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div> --> 
+
+      <div class="card">
+    <h5>Leave Report({{getleave.length}})</h5>
+
+    <p-table #todoTable [value]="getleave" [scrollable]="true" 
+    [globalFilterFields]="['employee.employeeNo','employee.employeeName','leave.fromDate', 'leave.toDate','leave.leaveTypeTo',
+    'leave.leaveDescription', 'leave.leaveBalance','leaveType.leaveName', 'leaveType.assignedDays']"
+    scrollHeight="400px" scrollDirection="both">
+        <ng-template pTemplate="header">
+
+
+          <div class="p-d-flex" style="margin-bottom: 20px;">
+
+            
+            <span class="p-input-icon-right p-ml-auto " 
+            style="padding-left: 1000px;"
+             >
+              <i class="pi pi-search"></i>
+               <input pInputText type="text" (input)="todoTable.filterGlobal($event.target.value, 'contains')"
+                placeholder="Search keyword" /> 
+                <!-- <input pInputText type="text" name="employeeName" class="form-control" [(ngModel)]="employeeName"
+                (ngModelChange)="Search()" placeholder="Search keyword" > -->
+            </span>
+            <!-- <form >
+              From Date : <input type="date" name="leavefromdate" placeholder="From Date"> 
+              To Date :<input type="date" name="leavetodate" placeholder="To Date">
+             
+              <button type="submit" class="btn btn-primary" (click)="Downloadexcel()">Download Report</button>
+            </form><br> -->
+            <button type="button" class="btn btn-success" pTooltip="Download all reports" style="text-align: end;" (click)="exportexcel()">ExportToExcel</button>
+
+          </div>
+            <tr>
+              <th pSortableColumn="employee.employeeNo">
+                <div class="flex justify-content-between align-items-center">
+                    Employee ID
+                    <p-sortIcon field="employee.employeeNo"></p-sortIcon>
+                    <p-columnFilter type="text" field="employee.employeeNo" display="menu" class="ml-auto"></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="employee.employeeName">
+                <div class="flex justify-content-between align-items-center">
+                    Employee Name
+                    <p-sortIcon field="employee.employeeName"></p-sortIcon>
+                    <p-columnFilter type="text" field="employee.employeeName" display="menu" class="ml-auto"></p-columnFilter>
+                </div>
+            </th>
+                <!-- <th class="th-bgcolour" colspan="1">Employee Name</th> -->
+                <!-- <th class="th-bgcolour" colspan="1">Leave From Date</th> -->
+                <th pSortableColumn="leave.fromDate">
+                  <div class="flex justify-content-between align-items-center">
+                      Leave From Date
+                      <p-sortIcon field="leave.leavefromdate"></p-sortIcon>
+                      <p-columnFilter type="date" field="leave.fromDate" display="menu" class="ml-auto"></p-columnFilter>
+                  </div>
+              </th>
+              <th pSortableColumn="leave.toDate">
+                <div class="flex justify-content-between align-items-center">
+                    Leave To Date
+                    <p-sortIcon field="leave.toDate"></p-sortIcon>
+                    <p-columnFilter type="date" field="leave.toDate" display="menu" class="ml-auto"></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="leave.leaveDescription">
+              <div class="flex justify-content-between align-items-center">
+                  Leave Description
+                  <p-sortIcon field="leave.leaveDescription"></p-sortIcon>
+                  <p-columnFilter type="text" field="leave.leaveDescription" display="menu" class="ml-auto"></p-columnFilter>
+              </div>
+          </th>
+          <th pSortableColumn="leave.leaveBalance">
+            <div class="flex justify-content-between align-items-center">
+                Leave Balance
+                <p-sortIcon field="leave.leaveBalance"></p-sortIcon>
+                <p-columnFilter type="text" field="leave.leaveBalance" display="menu" class="ml-auto"></p-columnFilter>
+            </div>
+        </th>
+        <th pSortableColumn="leaveType.leaveName">
+          <div class="flex justify-content-between align-items-center">
+              Leave Type
+              <p-sortIcon field="leaveType.leaveName"></p-sortIcon>
+              <p-columnFilter type="text" field="leaveType.leaveName" display="menu" class="ml-auto"></p-columnFilter>
+          </div>
+      </th>
+      <th pSortableColumn="leaveType.assignedDays">
+        <div class="flex justify-content-between align-items-center">
+            Total Days
+            <p-sortIcon field="leaveType.assignedDays"></p-sortIcon>
+            <p-columnFilter type="text" field="leaveType.assignedDays" display="menu" class="ml-auto"></p-columnFilter>
+        </div>
+    </th>
+                <!-- <th class="th-bgcolour" colspan="1">Leave Description</th>
+                <th class="th-bgcolour">Reamains monthly Balance</th>
+                <th class="th-bgcolour">Leave Type</th>
+                <th class="th-bgcolour">Total Days</th> -->
+
+  
+
+              
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+            <tr>
+                <td colspan="2">{{item.employee.employeeNo}}</td>
+                <td></td>
+                <td colspan="3">{{item.employee.employeeName}}</td>
+                
+                <td colspan="3">{{item.leave.fromDate | date:'MM/dd/yyyy'}} 
+                  ({{item.leave.leaveTypeFrom}})
+                </td>
+                <td  colspan="3">{{item.leave.toDate | date:'MM/dd/yyyy' }}
+                  ({{item.leave.leaveTypeTo}})
+                 </td>
+                
+                <td colspan="2">{{item.leave.leaveDescription}}</td>
+                <td colspan="2"></td>
+                <td colspan="2">{{item.leave.leaveBalance}}</td>
+                <td colspan="3">{{item.leaveType.leaveName}}</td>
+                <td colspan="2">{{item.leaveType.assignedDays}}</td>
+                
+                <!-- <td>
+                <i class="pi pi-file-excel" pTooltip="Download" style="font-size:36px; color: green; margin-top: 2px; cursor: pointer;" (click)="ExportDataByEmployee(item)"></i>
+
+                </td> -->
+
+
+
+          
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft" let-providerList>
+          <span>
+                  
+            {{'Total no. of records ='}}  {{providerList.totalRecords}}  </span>
+        </ng-template>
+    </p-table>
+
+    
+</div>
+</sb-layout-dashboard>

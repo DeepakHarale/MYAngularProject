@@ -1,0 +1,295 @@
+<sb-layout-dashboard>
+
+
+  <div *ngIf="!isAddOfficialDocument">
+    <div class="row justify-content-between mb-3 mt-4">
+      <div class="col-sm-4">
+
+        
+      </div>
+
+      <div class="col-sm-4 d-flex flex-row-reverse"  >
+        <button pButton type="button" icon="pi pi-plus-circle" label="Add Official Document" 
+          class="p-button-secondary p-button-sm" (click)="AddOfficialDocument()"></button>
+      </div>
+    </div>
+
+
+    <p-table [columns]="[]" [value]="GetOfficialDocument" styleClass="p-datatable-responsive-demo" class="table mt-2 table-striped"
+      [rowsPerPageOptions]="rowsPerPageOptions" [paginator]="true" [rows]="10" styleClass="p-datatable-sm">
+      <ng-template pTemplate="header" let-columns>
+        <tr  >
+          
+           <th class="th-bgcolour">Reference No</th>
+            <th  class="th-bgcolour">Document Name</th>
+            <th  class="th-bgcolour">Employee Name</th>
+            <th class="th-bgcolour">Designation</th>
+            <th  class="th-bgcolour">Document Date</th>
+            <th class="th-bgcolour" class="th-bgcolour">CTC</th>
+            <th class="th-bgcolour" class="th-bgcolour">Email Id</th>
+            <th class="th-bgcolour" class="th-bgcolour">Mobile No</th>
+            <th class="th-bgcolour" class="th-bgcolour">Status</th>
+          <th class="th-bgcolour ">Action</th>
+
+
+
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr>
+       <td >{{item.referenceNo}}</td>
+       <td >{{item.documentName}}</td>
+       <td >{{item.employeeName}}</td>
+       <td >{{item.designation}}</td>
+       <td >{{item.documentDate}}</td>
+       <td >{{item.ctc}}</td>
+       <td >{{item.emailId}}</td>
+       <td >{{item.mobileNo}}</td>
+       <td >{{item.status}}</td>
+       
+       <td>
+
+        <i (click)="updatedData(item)"  class="fa fa-edit " pTooltip="Edit" style="font-size:20px">
+        </i> &nbsp;
+
+        <i (click)="onDeleted($event,item)" [hidden]="isDeleteHide" class="pi pi-times-circle icon icon-delete" 
+        pTooltip="Delete" tooltipPosition="top"></i>
+      </td>
+
+        </tr>
+      </ng-template>
+    </p-table>
+
+  </div>
+
+
+  <div class="container" *ngIf="isAddOfficialDocument">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+          <div class="card shadow-lg border-0 rounded-lg">
+          <div class="card-header">
+            <h3 class="text-center">Add Official Documents</h3>
+          </div>
+          <div class="card-body">
+
+
+            <form [formGroup]="OfficialDocumentForm">
+               
+                <div class="form-row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Reference No</label>
+                      <span style="color:red;size:5px;">*</span>
+                      
+                      <div class="input-group">
+                        
+                        <input autocomplete="off" class="form-control " formControlName="referenceNo" id="referenceNo"
+                          maxlength="10" type="text" placeholder="Enter Reference No" 
+                          [ngClass]="{ 'is-invalid': submitted && f.referenceNo.errors }" />
+                      </div>
+                      <div *ngIf="submitted && f?.referenceNo?.errors">
+                        <span *ngIf="f?.referenceNo?.errors?.required" class="error-msg small">Reference No
+                          is
+                          required.</span>
+                      </div>
+                      
+                    </div>
+                  </div>
+        
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label >Document Name</label>
+                      <span style="color:red;size:5px;">*</span>
+
+                      <div class="input-group">
+                        
+                        <input autocomplete="off" class="form-control " formControlName="documentName" id="documentName"
+                          maxlength="30" type="text" placeholder="Enter Document Name"
+                          [ngClass]="{ 'is-invalid': submitted && f.documentName.errors }" />
+                      </div>
+                      <div *ngIf="submitted && f?.documentName?.errors">
+                        <span *ngIf="f?.documentName?.errors?.required" class="error-msg small">Document Name
+                          
+                          is
+                          required.</span>
+                      </div>
+
+                      
+                    </div>
+                  </div>
+        
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Employee Name</label>
+                      <span style="color:red;size:5px;">*</span>
+
+                      <div class="input-group">
+                        
+                        <input autocomplete="off" class="form-control " formControlName="employeeName" id="employeeName"
+                          maxlength="30" type="text" placeholder="Enter Employee Name" 
+                          [ngClass]="{ 'is-invalid': submitted && f.employeeName.errors }" />
+                      </div>
+                      <div *ngIf="submitted && f?.employeeName?.errors">
+                        <span *ngIf="f?.employeeName?.errors?.required" class="error-msg small">Employee Name. is a
+                          required.</span>
+                      </div>
+
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Designation</label>
+                      <span style="color:red;size:5px;">*</span>
+
+                      <div class="input-group">
+                        
+                        <input autocomplete="off" class="form-control " formControlName="designation" id="designation"
+                          maxlength="10" type="text" placeholder="Enter Designation" 
+                          [ngClass]="{ 'is-invalid': submitted && f.designation.errors }" />
+                      </div>
+                      <div *ngIf="submitted && f?.designation?.errors">
+                        <span *ngIf="f?.designation?.errors?.required" class="error-msg small">Designation. is a
+                          required.</span>
+                      </div>
+
+                     
+                    </div>
+                  </div>
+        
+                  
+                </div>
+        
+                <div class="form-row">
+        
+                  <div class="col-md-6">
+                    <div class="form-group"><label class="mb-1" for="documentDate">Select the Date</label><span style="color:red;size:5px;" >*</span>
+                      <input autocomplete="off" id="date" type="date" name="documentDate" 
+                        min="{{startOfCalenderYear | date:'yyyy-MM-dd'}}"  max="{{endOfCalenderYear | date:'yyyy-MM-dd'}}"
+                        formControlName="documentDate" class="form-control "  >
+
+
+                    </div>
+                    <div *ngIf="submitted && f?.documentDate?.errors">
+                      <span *ngIf="f?.documentDate?.errors?.required" class="error-msg small">Date is
+                        required.</span>
+                        
+                        <div *ngIf="f?.documentDate?.errors?.max">date start from</div>
+
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>CTC</label>
+                      <span style="color:red;size:5px;">*</span>
+
+                      <div class="input-group">
+                        
+                        <input autocomplete="off" class="form-control " formControlName="ctc" id="ctc"
+                          maxlength="10" type="text" placeholder="Enter ctc" numbersOnly
+                          [ngClass]="{ 'is-invalid': submitted && f.ctc.errors }" />
+                      </div>
+                      <div *ngIf="submitted && f?.ctc?.errors">
+                        <span *ngIf="f?.ctc?.errors?.required" class="error-msg small">CTC is a
+                          required.</span>
+                      </div>
+
+                     
+                    </div>
+                  </div>
+        
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="mb-1" for="inputEmailAddress">Email</label><span
+                        style="color:red;size:5px;">*</span><input autocomplete="off" maxlength="100"
+                        class="form-control " formControlName="emailId" id="inputEmailAddress" type="email"
+                        aria-describedby="emailHelp" placeholder="Enter email address"
+                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                        [ngClass]="{ 'is-invalid': submitted && f.emailId.errors }" />
+                      <div *ngIf="submitted && f?.emailId?.errors">
+                        <span *ngIf="f?.emailId?.errors?.required" class="error-msg small"> Email
+                          required.</span>
+                        <span *ngIf="f?.emailId?.errors?.pattern" class="error-msg small"> Please enter valid Email
+                          Address
+                          .</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="mb-1" for="inputLastName">Mobile No</label><span
+                        style="color:red;size:5px;">*</span><input autocomplete="off" class="form-control "
+                        numbersOnly maxlength="10" formControlName="mobileNo"
+                        [ngClass]="{ 'is-invalid': submitted && f.mobileNo.errors }" id="inputLastName" type="text"
+                        placeholder="Enter mobile no" />
+                      <div *ngIf="submitted && f?.mobileNo?.errors">
+                        <span *ngIf="f?.mobileNo?.errors?.required" class="error-msg small">Mobile Number is required.
+                        </span>
+                      </div>
+
+                      <span *ngIf="f?.mobileNo?.errors?.pattern" class="error-msg small">Please Enter 10 digit Mobile
+                        Number.
+                      </span>
+                    </div>
+                  </div>
+          
+                </div>
+        
+                <div class="form-row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Status</label>
+                      <span style="color:red;size:5px;">*</span>
+
+                      <div class="input-group">
+                        
+                        <input autocomplete="off" class="form-control " formControlName="status" id="status"
+                          maxlength="10" type="text" placeholder="Enter Status" 
+                          [ngClass]="{ 'is-invalid': submitted && f.status.errors }" />
+                      </div>
+                      <div *ngIf="submitted && f?.status?.errors">
+                        <span *ngIf="f?.status?.errors?.required" class="error-msg small">Status is a
+                          required.</span>
+                      </div>
+
+                    </div>
+                  </div>
+          
+                </div>
+                 
+                <div>
+                    <button type="button" (click)="onBackToList(false)" pButton class="p-button-warning float-left">Back
+                      To
+                      List</button>
+                    <button type="submit" pButton class="btn btn-success float-right " *ngIf="!isUpdateDocument" (click)="onSubmit()">Save</button>
+                  </div>
+                  <button type="button"  class="btn btn-primary float-right"
+                  (click)="UpdateDocument()" *ngIf="isUpdateDocument">Update</button>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <p-toast></p-toast>
+
+
+  
+  <p-confirmPopup></p-confirmPopup>
+
+<!-- </sb-layout-dashboard> -->
+
+<!-- {{GetOfficialDocument}} -->
+
+
+
+        
+        
+         
+

@@ -1,0 +1,154 @@
+<sb-layout-dashboard>
+  <ng-container *ngIf="(sharedPermission.todos$ | async) as todo">
+    <ng-container *ngIf=" todo && todo[enumModule.Holidays]" >
+
+  <div *ngIf="!isAddHoliday">
+    <div class="row justify-content-between mb-3 mt-4">
+      <div class="col-sm-4">
+
+        <h4> Holiday List({{getHoliday?.length ||'0'}})</h4>
+      </div>
+
+      <div class="col-sm-4 d-flex flex-row-reverse" *ngIf="todo[enumModule.Holidays][enumPer.ADD]" >
+        <button pButton type="button" icon="pi pi-plus-circle" label="Add Holiday" 
+          class="p-button-secondary p-button-sm" (click)="AddHolidayDetails()"></button>
+      </div>
+    </div>
+
+
+    <p-table [columns]="[]" [value]="getHoliday" styleClass="p-datatable-responsive-demo" class="table mt-2 table-striped"
+      [rowsPerPageOptions]="rowsPerPageOptions" [paginator]="true" [rows]="10" styleClass="p-datatable-sm">
+      <ng-template pTemplate="header" let-columns>
+        <tr  >
+          <!-- <th>holidayId</th> -->
+          <th class="th-bgcolour">Holiday Type</th>
+          <th class="th-bgcolour" >Date</th>
+          <th class="th-bgcolour">Optional</th>
+          <th class="th-bgcolour">Added On</th>
+          <th class="th-bgcolour ">Action</th>
+        
+         
+
+
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr>
+          <!-- <td>{{item.holidayId}}</td> -->
+          <td>{{item.holidayType}}</td>
+          <td>{{item.date | date :'dd-MM-yyyy'}}</td>
+          <td>{{item.optional?'YES':'NO'}}</td>
+          <td>{{item.addedOn | date :'dd-MM-yyyy'}}</td>
+          <!-- <td>{{item.addedBy}}</td> -->
+        
+          <td>
+
+            <i (click)="updatedData(item)" *ngIf="item.holidayId!=0 && todo[enumModule.Holidays][enumPer.EDIT] " class="fa fa-edit " pTooltip="Edit" style="font-size:20px">
+            </i> &nbsp;
+
+            <i (click)="onDeleted($event,item)" [hidden]="isDeleteHide" class="pi pi-times-circle icon icon-delete" *ngIf="todo[enumModule.Holidays][enumPer.DELETE]"
+            pTooltip="Delete" tooltipPosition="top"></i>
+          </td>
+
+        
+
+        </tr>
+      </ng-template>
+    </p-table>
+
+  </div>
+
+
+  <div class="container" *ngIf="isAddHoliday">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+          <div class="card shadow-lg border-0 rounded-lg">
+          <div class="card-header">
+            <h3 class="text-center">Holiday Details</h3>
+          </div>
+          <div class="card-body">
+
+
+            <form [formGroup]="HolidayForm">
+
+                <div class="row my-4">
+
+                  <div class="col-md-12 ">
+
+                    <div class="form-group"><label class="mb-1" for="holidayType">Holiday Type</label><span style="color:red;size:5px;" >*</span>
+
+                      <ng-select name="holidayType" [items]="holidayTypeList" [addTag]="true" bindLabel="holidayType"
+                        bindValue="holidayType" formControlName="holidayType">
+                      </ng-select>
+                    </div>
+                    <div *ngIf="submitted && f?.holidayType?.errors">
+                      <span *ngIf="f?.holidayType?.errors?.required" class="error-msg small">Holiday type is
+                        required.</span>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group"><label class="mb-1" for="holiday">Select the Date</label><span style="color:red;size:5px;" >*</span>
+                      <input autocomplete="off" id="date" type="date" name="holiday" 
+                        formControlName="date" class="form-control "  min="{{startOfCalenderYear | date:'yyyy-MM-dd'}}"  max="{{endOfCalenderYear | date:'yyyy-MM-dd'}}">
+
+
+                    </div>
+                    <div *ngIf="submitted && f?.date?.errors">
+                      <span *ngIf="f?.date?.errors?.required" class="error-msg small">Date is
+                        required.</span>
+                        
+                        <div *ngIf="f?.date?.errors?.max">date start from</div>
+
+                    </div>
+                  </div>
+
+
+
+                  <div class="form-group col-md-8 " style="margin-top: 8px;">
+                    
+                     <label aria-label="optional" class="mb-1" >Is Optional:</label> &nbsp; &nbsp; &nbsp; &nbsp; 
+                     <style>
+                        input.larger {
+                          width:20px;
+                          height:20px;
+                        }
+                      </style>
+
+                      <input class="form-control " autocomplete="off" id="checkbox" type="checkbox" class="larger" name="optional" checked formControlName="optional">
+                     
+                      
+                     
+                  </div>
+                
+
+            
+                
+
+                </div>
+                <div>
+                  <button type="button" (click)="onBackToList(false)" pButton class="p-button-warning float-left">Back
+                    To
+                    List</button>
+                  <button type="submit" pButton class="p-button-success float-right " *ngIf="!isUpdateHoliday" (click)="onSubmit()">Save</button>
+                </div>
+                <button type="button" *ngIf="isUpdateHoliday" class="btn btn-primary float-right"
+                (click)="UpdateHoliday()">Update</button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <p-toast></p-toast>
+
+
+  
+  <p-confirmPopup></p-confirmPopup>
+
+
+</ng-container>
+</ng-container>
+</sb-layout-dashboard>

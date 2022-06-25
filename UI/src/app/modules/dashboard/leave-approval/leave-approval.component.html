@@ -1,0 +1,128 @@
+<sb-layout-dashboard>
+
+  <ng-container *ngIf="(sharedPermission.todos$ | async) as todo">
+    <ng-container *ngIf=" todo && todo[enumModule.Leave_Approval]" >
+  <div class="col-sm-10" style="padding-top: 10px;">
+    <h4 style="text-align: center;">Leave Approval({{ leaveApprovalData.length }})</h4>
+</div>
+
+  <p-table #todoTable [columns]="[]" [value]="leaveApprovalData" styleClass="p-datatable-responsive-demo" class="table mt-2 table-striped"
+    [globalFilterFields]="['employee.employeeName','leave.fromDate','leave.toDate','leave.leaveDescription', 'leave.leaveStatus', 'leave.createdOn']"
+    [rowsPerPageOptions]="rowsPerPageOptions" [paginator]="true" [rows]="5" styleClass="p-datatable-sm">
+    <ng-template pTemplate="header" let-columns>
+      
+      <div class="p-d-flex" style="margin-bottom: 20px;">
+        <!-- style="padding-left: 1000px; margin-top: 10px;" -->
+
+        <span class="p-input-icon-right p-ml-auto ">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" (input)="todoTable.filterGlobal($event.target.value, 'contains')"
+            placeholder="Search keyword" />
+        </span>
+      </div>
+      <tr>
+
+        <!-- <th>Leave Id </th>          -->
+        <th pSortableColumn="employee.employeeName"  [ngStyle]="{'width':'160px'}" scope="col" colspan="2" class="th-bgcolour">EmployeeName <p-sortIcon
+            field="employee.employeeName" style="display: inline;"></p-sortIcon>
+        </th>
+        <th pSortableColumn="leave.fromDate" [ngStyle]="{'width':'150px'}" class="th-bgcolour">From Date <p-sortIcon field="leave.fromDate">
+          </p-sortIcon>
+        </th>
+        <th pSortableColumn="leave.toDate" [ngStyle]="{'width':'160px'}" class="th-bgcolour">To Date<p-sortIcon field="leave.toDate">
+          </p-sortIcon>
+        </th>
+        <th pSortableColumn="onChangeCount(item)" [ngStyle]="{'width':'100px'}" class="th-bgcolour" >No. of days </th>
+        
+        <th pSortableColumn="leave.leaveDescription" scope="col" colspan="2"  class="th-bgcolour">Reason<p-sortIcon
+            field="leave.leaveDescription"></p-sortIcon>
+        </th>
+        <th pSortableColumn="leave.createdOn" class="th-bgcolour">Applied On
+          <!-- <p-sortIcon field="leave.toDate"> -->
+        <!-- </p-sortIcon> -->
+      </th> 
+
+
+        <th pSortableColumn="leave.leaveStatus" class="th-bgcolour">Leave Status<p-sortIcon field="leave.leaveStatus" ></p-sortIcon>
+        </th>
+
+
+
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+
+        <!-- <td>{{item.leave.leaveId}}</td> -->
+
+
+        <td style="padding-top: 20px;" scope="col" colspan="2">{{item.employee.employeeName}}</td>
+        <td style="padding-top: 20px;">{{item.leave.fromDate | date:'dd-MM-YYYY'}}</td>
+        <td style="padding-top: 20px;">{{item.leave.toDate | date:'dd-MM-YYYY'}}</td>
+        <td style="text-align: center;padding-top: 20px;">{{onChangeCount(item)}}</td>
+        <!-- <td> {{this.formValue.totalDays}}</td> -->
+        
+        
+        <td colspan="2" style="padding-bottom: 2rem; ">
+          <span style="display: inline-block;">
+          
+           <!-- style="padding-bottom: 2rem;padding-bottom: 20px; " -->
+         <!-- display: flex; -->
+        <!-- flex-direction: row; -->               
+        <!-- " height: 5rem;
+        overflow: hidden;
+        padding: 2rem;"  -->
+          <app-read-more  [text]="item.leave.leaveDescription" maxLength="10" style="display: inline-block;" >
+            <!-- style=" 
+          cursor: pointer;display: inline-block;
+        flex-direction:row-reverse;" > -->
+      </app-read-more> 
+      </span>
+      
+    </td>
+        
+        
+        
+        <!-- </td>[ngClass]="{'show-less': showShortDesciption}" > -->
+          
+         
+          
+         
+        
+      
+        <td style="padding-top: 20px;">{{item.leave.createdOn | date:'dd-MM-YYYY'}}</td>
+
+
+        
+        <td>
+          <ng-container *ngIf="todo[enumModule.Leave_Approval][enumPer.ADD]">
+          <p-splitButton label="{{item.leave.leaveStatus}}" [styleClass]="getColor(item.leave.leaveStatus)" #btnsplit
+            (onClick)="btnsplit.onDropdownButtonClick()" (onDropdownClick)="selectLeaveItem(item)" 
+            [model]="statusItem[item.leave.leaveId]" ></p-splitButton>
+          </ng-container>
+        </td>
+
+      </tr>
+
+
+    </ng-template>
+
+    <ng-template pTemplate="paginatorleft" let-providerList>
+      <span>
+              
+        {{'Total no. of records ='}}  {{providerList.totalRecords}}  </span>
+    </ng-template>
+  </p-table>
+
+
+ 
+
+
+
+
+  <p-confirmDialog></p-confirmDialog>
+
+</ng-container>
+</ng-container>
+
+</sb-layout-dashboard>

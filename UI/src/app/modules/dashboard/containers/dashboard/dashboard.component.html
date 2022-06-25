@@ -1,0 +1,204 @@
+<sb-layout-dashboard>
+  <sb-dashboard-head title="" [hideBreadcrumbs]="false"></sb-dashboard-head>
+  <sb-dashboard-charts></sb-dashboard-charts>
+  <sb-dashboard-tables></sb-dashboard-tables>
+
+
+
+
+  <sb-dashboard-cards></sb-dashboard-cards>
+
+  <div class="box-container">
+
+    <div class="box-item">
+      <div class="flip-box">
+        <div class="flip-box-front text-center" style="background-image:url('assets/img/holiday.jpg');">
+          <!-- <div style="background-image:url('https://source.unsplash.com/600x900/?> -->
+          <div class="inner color-white">
+
+            <h4 class="mb-5" style="text-align: center;">
+              <marquee>Upcoming Holidays</marquee>
+            </h4>
+
+
+            <table class="mb-5" border="5px solid black;" style="font-style: italic; table-layout: 50px;">
+              <thead>
+                <tr>
+                  <th style="width: 190px;">Holiday Type</th>
+                  <th tyle="width: 190px;"> Date</th>
+
+                  <th tyle="width: 10px;">Optional</th>
+
+                </tr>
+              </thead>
+              <thead>
+
+
+                <tr *ngFor="let item of holidayList, let i=index">
+                  <td *ngIf="i<5" tyle="width: 200px;">{{item.holidayType}}
+                  </td>
+                  <td *ngIf="i<5" tyle="width: 190px;">{{item.date | date :'dd-MM-yyyy'}}</td>
+                  <td *ngIf="i<5" style="text-align: center;">{{item.optional?'YES':'NO'}}</td>
+                </tr>
+              </thead>
+            </table>
+          </div>
+        </div>
+        <div class="flip-box-back text-center" style="background-image:url('assets/img/holiday2.jpg');">
+          <div class="inner color-white">
+            <h4 class="mb-5" style="text-align: center;">
+              <marquee>Upcoming Holidays</marquee>
+            </h4>
+
+
+            <table class="mb-5" border="5px solid black;" style="font-style: italic; table-layout: 50px;">
+              <thead>
+                <tr>
+                  <th style="width: 190px;">Holiday Type</th>
+                  <th style="width: 190px;"> Date</th>
+
+                  <th style="width: 10px;">Optional</th>
+
+                </tr>
+              </thead>
+              <thead>
+
+
+                <tr *ngFor="let item of holidayList, let i=index">
+                  <td *ngIf="i<5" tyle="width: 200px;">{{item.holidayType}}
+                  </td>
+                  <td *ngIf="i<5" tyle="width: 190px;">{{item.date | date :'dd-MM-yyyy'}}</td>
+                  <td *ngIf="i<5" style="text-align: center;">{{item.optional?'YES':'NO'}}</td>
+                </tr>
+              </thead>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="box-item">
+      <div class="flip-box">
+        <div class="flip-box-front text-center filter-" style="background-image:url('assets/img/bg3.jfif');">
+          <div class="inner color-white mb-5">
+            <h5 class="mb-5">
+              <marquee>New joinee employee</marquee>
+            </h5>
+            <table class="mb-5" border="5px solid black;" style="font-style: italic; font: size 100px;;">
+              <thead>
+                <tr>
+                  <th style="width: 190px;">Employee Name</th>
+                  <th style="width: 190px;">Joining date</th>
+
+                  <!-- <th>Department</th> -->
+
+                </tr>
+              </thead>
+              <thead>
+
+
+                <tr *ngFor="let item of getEmployee, let i=index">
+                  <td>{{item.employeeName}}
+                  </td>
+                  <td>{{item.joiningDate | date :'dd-MM-yyyy'}}</td>
+                  <!-- <td  style="text-align: center;">{{item.department}}</td> -->
+                </tr>
+              </thead>
+            </table>
+          </div>
+        </div>
+        <div class="flip-box-back text-center" style="background-image:url('assets/img/12img.jpg');">
+
+          <div class="inner color-white">
+            <h5 class="mb-5">
+              <marquee>New joinee employee</marquee>
+            </h5>
+            <table class="mb-5" border="5px solid black;" style="font-style: italic; font: size 100px;;">
+              <thead>
+                <tr>
+                  <th style="width: 190px;">Employee Name</th>
+                  <th style="width: 190px;">Joining date</th>
+
+                  <!-- <th>Department</th> -->
+
+                </tr>
+              </thead>
+              <thead>
+
+
+                <tr *ngFor="let item of getEmployee, let i=index">
+                  <td>{{item.employeeName}}
+                  </td>
+                  <td>{{item.joiningDate | date :'dd-MM-yyyy'}}</td>
+                  <!-- <td  style="text-align: center;">{{item.department}}</td> -->
+                </tr>
+              </thead>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box-item">
+      <div class="flip-box ">
+        <div class="flip-box-front text-center" style="background-image:url('assets/img/img2.jpg');">
+          <div *ngIf="getleavedata && getleavedata.length>1" class="inner color-white">
+            <h4>
+              <marquee>Leave Balance</marquee>
+            </h4>
+
+            <h6 style="text-align: start;">Earned Leave : ({{getleavedata[0]}})</h6>
+            <h6 style="text-align: start;"> Casual /Sick Leave : ({{getleavedata[1]}})</h6>
+
+            <!-- <ul style="text-align:justify; ">
+              <li>The Company intent is to provide each employee with annual time for vacation, sick, or personal use.
+                It is
+                understood that employees in the course of their employment will need time off to relax and have a
+                worklife balance.</li>
+            </ul> -->
+            <a class="btn btn-dark" target="_blank" href="assets/img/AT_LeavePolicy-Updated.pdf"
+              style="color:rgb(245, 241, 248)t;background-color: rgb(53, 45, 66);width: 190px;">READ LEAVE
+              POLICY </a>
+
+
+          </div>
+        </div>
+        <div class="flip-box-back text-center" style="background-image:url('assets/img/img4.jpg');">
+          <div class="inner color-white" *ngIf="getleavedata && getleavedata.length>1">
+            <h4 >
+              <marquee>Leave Balance</marquee>
+            </h4>
+
+            <h6 style="text-align: start;">Earned Leave : ({{getleavedata[0]}})</h6>
+            <h6 style="text-align: start;"> Casual /Sick Leave : ({{getleavedata[1]}})</h6>
+
+            <!-- <ul style="text-align:justify">
+              <li>The Company intent is to provide each employee with annual time for vacation, sick, or personal use.
+                It is
+                understood that employees in the course of their employment will need time off to relax and have a
+                worklife balance.</li>
+            </ul> -->
+
+            <a (click)="togglePdf($event)" class="btn btn-dark"
+              style="color:rgb(245, 241, 248);background-color: rgb(53,45,66);width: 190px;">READ LEAVE
+              POLICY </a>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+
+
+
+
+
+</sb-layout-dashboard>
+<p-dialog header="" [(visible)]="display">
+
+  <embed src="../../../../assets/img/AT_LeavePolicy-Updated.pdf" width="700" height="500" />
+</p-dialog>

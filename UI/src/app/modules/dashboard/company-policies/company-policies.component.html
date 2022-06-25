@@ -1,0 +1,70 @@
+<sb-layout-dashboard>
+
+    <h1 style="text-align: center; color: rgb(5, 3, 7);text-size-adjust: 200px;">Documents</h1><br>
+
+    <!-- <div class="col-md-12"> -->
+    <div class="row main-button">
+        <div class="col-md-3 col">
+            <button  type="button"  (click)="toggleINDUCTIONPolicy()" class="btn btn-dark {{inductionPolicy && 'active'}}">INDUCTION
+                POLICY
+            </button>
+        </div>
+
+        <div class="col-md-3 col">
+            <button type="button" (click)="toggleLEAVEPolicy()" class="btn btn-dark {{leavePolicy && 'active'}}">LEAVE
+                POLICY
+            </button>
+        </div>
+
+         <div class="col-md-3 col">
+            <button type="button" (click)="toggleCOMPANYPolicy()" class="btn btn-dark {{companyPolicy && 'active'}}">COMPANY
+                POLICY
+            </button>
+        </div>
+
+        <div class="col-md-3 col">
+            <button type="button" (click)="toggleHEALTHPolicy()" class="btn btn-dark {{healthPolicy && 'active'}}">MEDICLAIM
+                POLICY
+            </button>
+        </div>
+
+
+
+
+        <!-- <div class="col-md-3 ">
+            <button (click)="toggleHRPolicy()" class="btn btn-dark ">COMPANY
+                INTRO
+            </button>
+        </div>
+
+        <div class="col-md-3 ">
+            <button (click)="toggleHRPolicy()" class="btn btn-dark ">MEDICLAIM
+                POLICY
+            </button>
+        </div> -->
+
+
+    </div>
+    <div class="row mt-4" *ngIf="inductionPolicy">
+        <div class="col-sm-12">
+            <embed src="../../../../assets/img/Induction PPT.pdf" width="1200" height="500" />
+        </div>
+    </div>
+    <div class="row mt-4 ml-auto" *ngIf="leavePolicy">
+        <div class="col-sm-12">
+            <embed src="../../../../assets/img/AT_LeavePolicy-Updated.pdf" width="1200" height="500" />
+        </div>
+    </div>
+
+    <div class="row mt-4" *ngIf="companyPolicy">
+        <div class="col-sm-12">
+            <embed src="../../../../assets/img/AT_LeavePolicy-Updated.pdf" width="1200" height="500" />
+        </div>
+    </div>
+    <div class="row mt-4" *ngIf="healthPolicy">
+        <div class="col-sm-12">
+            <embed src="../../../../assets/img/AT_LeavePolicy-Updated.pdf" width="1200" height="500" />
+        </div>
+    </div>
+
+</sb-layout-dashboard>

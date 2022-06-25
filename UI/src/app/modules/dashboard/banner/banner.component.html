@@ -1,0 +1,154 @@
+ <sb-layout-dashboard>
+   <div class="row">
+    <div class="col-12 grid-margin"> 
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Human Resource Portal</h4>
+          <span class="p-input-icon-right p-ml-auto " 
+          style="padding-left: 1000px;"
+           >
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" (input)="todoTable.filterGlobal($event.target.value, 'contains')"
+              placeholder="Search keyword" />
+          </span>
+          <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal">
+            Add Interview
+          </button><br><br>
+
+          <!-- Button trigger modal -->
+
+           
+            <p-table #todoTable [value]="getinfo" styleClass="p-datatable-responsive-demo" class="table mt-2 table-striped"
+            [rowsPerPageOptions]="rowsPerPageOptions" [paginator]="true" [rows]="10" 
+            [globalFilterFields]="['candidateName','designation','status','status','scheduleDate','refralName','interviewerName','feedbackByInterviewer']"styleClass="p-datatable-sm">
+            <ng-template pTemplate="header">
+              <tr  >
+                <th class="th-bgcolour">Candidate Name </th>
+                  <th class="th-bgcolour"> Designation</th>
+                  <th class="th-bgcolour">Status</th>
+                  <th class="th-bgcolour">Schedule Interview</th>
+                  <th class="th-bgcolour">Referal Name/ID</th>
+                  <th class="th-bgcolour">Interviewer Name</th>
+                  <th class="th-bgcolour">Description</th>
+                  <th class="th-bgcolour">Action</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item>
+              <tr>
+                <td>{{item.candidateName}}</td>
+                <td>{{item.designation}}</td>
+                <td>{{item.status}}</td>
+                <td>{{item.scheduleDate | date:'MMM-d-y'}}</td>
+                <td>{{item.refralName}}</td>
+                <td>{{item.interviewerName}} </td>
+                <td>{{item.feedbackByInterviewer}}</td>
+              
+                <td>
+      
+                  <i (click)="updatedData(item)" *ngIf="item.candidateId!=0" data-toggle="modal" data-target="#exampleModal" class="fa fa-edit " pTooltip="Edit" style="font-size:20px">
+                  </i> &nbsp;
+      
+                  <i (click)="onDeleted($event,item)" [hidden]="isDeleteHide" data-target="#exampleModal" data-dismiss="modal" class="pi pi-times-circle icon icon-delete"
+                  pTooltip="Delete" tooltipPosition="top"></i>
+                </td>
+      
+              
+      
+              </tr>
+            </ng-template>
+          </p-table>
+       
+          </div>
+      </div>
+     </div>
+     
+    
+    <!-- Modal -->
+    <div class="modal fade mt-4" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add Interview</h5>
+            <button type="button" class="close" id="cancel" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="bannerForm">
+            <div class="form-group">
+              <label for="Candidatename">Candidate Name</label>
+              <input type="text" class="form-control" formControlName="candidateName" id="Candidatename" placeholder="Enter Candidate Name">
+              <div *ngIf="submitted && f?.candidateName?.errors">
+                <span *ngIf="f?.candidateName?.errors?.required" class="error-msg small">Candiate field is
+                  required.</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Candidatename">Designation</label>
+              <input type="text" class="form-control" formControlName="designation" id="Candidatename" placeholder="Enter Candidate Name">
+              <div *ngIf="submitted && f?.designation?.errors">
+                <span *ngIf="f?.designation?.errors?.required" class="error-msg small">Candiate field is
+                  required.</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Candidatename">Status</label>
+              <input type="text" class="form-control" formControlName="status" id="Candidatename" placeholder="Enter Candidate Name">
+              <div *ngIf="submitted && f?.status?.errors">
+                <span *ngIf="f?.status?.errors?.required" class="error-msg small">Candiate field is
+                  required.</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Candidatename">Schedule Date</label>
+              <input type="date" class="form-control" formControlName="scheduleDate" id="Candidatename" placeholder="Enter Candidate Name">
+              <div *ngIf="submitted && f?.scheduleDate?.errors">
+                <span *ngIf="f?.scheduleDate?.errors?.required" class="error-msg small">Candiate field is
+                  required.</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Candidatename">Referal Name</label>
+              <input type="text" class="form-control" formControlName="refralName" id="Candidatename" placeholder="Enter Candidate Name">
+              <div *ngIf="submitted && f?.refralName?.errors">
+                <span *ngIf="f?.refralName?.errors?.required" class="error-msg small">Candiate field is
+                  required.</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Candidatename">Interviewer Name</label>
+              <input type="text" class="form-control" formControlName="interviewerName" id="Candidatename" placeholder="Enter Candidate Name">
+              <div *ngIf="submitted && f?.interviewerName?.errors">
+                <span *ngIf="f?.interviewerName?.errors?.required" class="error-msg small">Candiate field is
+                  required.</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Candidatename">Feedback</label>
+              <input type="text" class="form-control" formControlName="feedbackByInterviewer" id="Candidatename" placeholder="Enter Candidate Name">
+              <div *ngIf="submitted && f?.feedbackByInterviewer?.errors">
+                <span *ngIf="f?.feedbackByInterviewer?.errors?.required" class="error-msg small">Candiate field is
+                  required.</span>
+              </div>
+            </div>
+            
+          </form>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" id="cancel" pButton class="p-button-success float-right " (click)="onSubmit()">Save</button>
+            <button type="button" id="cancel" class="btn btn-primary float-right" (click)="UpdateHoliday()">Update</button>
+            <button type="button" id="cancel" pButton class="p-button-primary float-right " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+      </div>
+    </div>
+   </div> 
+
+   <p-toast></p-toast>
+   <p-confirmPopup></p-confirmPopup>
+
+</sb-layout-dashboard> 
+
+
+
+
